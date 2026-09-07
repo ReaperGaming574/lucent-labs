@@ -525,6 +525,166 @@ body {
     opacity: 0.65;
 }
 
+/* ---------------------------------
+   CONTACT PAGE
+---------------------------------- */
+
+.contact-page {
+    min-height: 100vh;
+    padding: 180px 8% 100px;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.04),
+            transparent 35%
+        ),
+        #090a0d;
+}
+
+.contact-page h1 {
+    max-width: 850px;
+    margin-top: 18px;
+    margin-bottom: 24px;
+
+    font-size: clamp(48px, 7vw, 90px);
+    line-height: 0.95;
+    letter-spacing: -3px;
+}
+
+.contact-intro {
+    max-width: 720px;
+
+    color: #a6a9b2;
+
+    font-size: 18px;
+    line-height: 1.7;
+
+    margin-bottom: 70px;
+}
+
+
+/* CONTACT CARDS */
+
+.contact-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 24px;
+
+    max-width: 1100px;
+}
+
+.contact-card {
+    min-height: 320px;
+
+    padding: 36px;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid #292b34;
+    border-radius: 16px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.025),
+        rgba(255, 255, 255, 0.008)
+    );
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-6px);
+    border-color: #4a4d58;
+}
+
+.contact-number {
+    color: #6f727c;
+
+    font-size: 13px;
+    letter-spacing: 2px;
+
+    margin-bottom: 40px;
+}
+
+.contact-card h2 {
+    font-size: 34px;
+
+    margin-bottom: 16px;
+}
+
+.contact-card p {
+    max-width: 440px;
+
+    color: #9c9fa8;
+
+    line-height: 1.7;
+}
+
+.contact-link {
+    margin-top: auto;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+.contact-link:hover {
+    opacity: 0.7;
+}
+
+
+/* CONTACT INFORMATION */
+
+.contact-note {
+    max-width: 900px;
+
+    margin-top: 100px;
+    padding-top: 60px;
+
+    border-top: 1px solid #292b34;
+}
+
+.contact-note h2 {
+    font-size: 42px;
+
+    margin-top: 14px;
+    margin-bottom: 20px;
+}
+
+.contact-note p:last-child {
+    max-width: 700px;
+
+    color: #9c9fa8;
+
+    line-height: 1.7;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .contact-page {
+        padding:
+            140px 6%
+            80px;
+    }
+
+    .contact-options {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-page h1 {
+        letter-spacing: -2px;
+    }
+
+}
 
 /* MOBILE */
 
@@ -653,3 +813,4 @@ footer {
     }
 
 }
+
