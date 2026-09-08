@@ -43,6 +43,26 @@ const params =
 const token =
     params.get("token");
 
+    const quotePayment =
+    document.getElementById(
+        "quotePayment"
+    );
+
+const quotePaymentAmount =
+    document.getElementById(
+        "quotePaymentAmount"
+    );
+
+const payDepositButton =
+    document.getElementById(
+        "payDepositButton"
+    );
+
+const quotePaymentMessage =
+    document.getElementById(
+        "quotePaymentMessage"
+    );
+
 
 async function loadClientQuote() {
 
@@ -134,6 +154,23 @@ async function loadClientQuote() {
                 quote.status
             ).toUpperCase()
         );
+
+        // =========================================
+// PAYMENT SECTION
+// =========================================
+
+if (
+    quote.status === "accepted"
+) {
+    quotePayment.hidden =
+        false;
+
+    quotePaymentAmount.textContent =
+        formatMoney(
+            quote.deposit_pence
+        );
+}
+
         if (
     quote.status === "accepted" ||
     quote.status === "declined"
@@ -352,6 +389,102 @@ async function respondToQuote(
 
 }
 
+// =========================================
+// PAY DEPOSIT
+// =========================================
+
+payDepositButton.addEventListener(
+    "click",
+    async () => {
+        payDepositButton.disabled =
+            true;
+
+        payDepositButton.textContent =
+            "Opening Secure Checkout...";
+
+        quotePaymentMessage.hidden =
+            true;
+
+
+        try {
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const token =
+                params.get("token");
+
+
+            if (!token) {
+                throw new Error(
+                    "Quote token is missing."
+                );
+            }
+
+
+            const response =
+                await fetch(
+                    "/api/create-client-payment",
+                    {
+                        method:
+                            "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                token
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+                throw new Error(
+                    data.error ||
+                    "Unable to create payment."
+                );
+            }
+
+
+            window.location.href =
+                data.checkoutUrl;
+
+
+        } catch (error) {
+            console.error(
+                "Deposit payment error:",
+                error
+            );
+
+
+            quotePaymentMessage.hidden =
+                false;
+
+            quotePaymentMessage.textContent =
+                error.message;
+
+
+            payDepositButton.disabled =
+                false;
+
+            payDepositButton.textContent =
+                "Pay Deposit";
+        }
+    }
+);
 
 // =========================================
 // BUTTONS
