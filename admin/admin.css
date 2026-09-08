@@ -1625,3 +1625,118 @@ body {
     }
 
 }
+
+/* ========================================
+   CLIENT QUOTE LINK
+======================================== */
+
+.quote-send-button.active {
+    border:
+        1px solid rgba(255, 255, 255, 0.16);
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    color: #ffffff;
+
+    cursor: pointer !important;
+}
+
+.quote-send-button.active:hover {
+    background:
+        rgba(255, 255, 255, 0.11);
+}
+
+.client-link-box {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.client-link-box > span {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+}
+
+.client-link-row {
+    display: flex;
+
+    gap: 8px;
+}
+
+.client-link-row input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: #ffffff;
+
+    font-size: 10px;
+}
+
+.client-link-row button {
+    padding:
+        0 15px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #090909;
+
+    cursor: pointer;
+}
+
+.client-link-box p {
+    margin-top: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.28);
+
+    font-size: 9px;
+}
+
+@media (max-width: 600px) {
+
+    .client-link-row {
+        flex-direction: column;
+    }
+
+    .client-link-row button {
+        min-height: 42px;
+    }
+
+}

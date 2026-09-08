@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Project Quote | Lucent Labs</title>
+
+    <link
+        rel="stylesheet"
+        href="client-quote.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="client-quote">
+
+        <header class="client-quote-brand">
+
+            <a href="/">
+                LUCENT LABS
+            </a>
+
+            <span>
+                PROJECT QUOTE
+            </span>
+
+        </header>
+
+
+        <div
+            class="client-loading"
+            id="clientQuoteLoading"
+        >
+            Loading your quote...
+        </div>
+
+
+        <div
+            class="client-error"
+            id="clientQuoteError"
+            hidden
+        >
+
+            <h1>
+                Quote unavailable
+            </h1>
+
+            <p>
+                This quote link may be invalid
+                or no longer available.
+            </p>
+
+        </div>
+
+
+        <div
+            id="clientQuoteContent"
+            hidden
+        >
+
+            <section class="client-quote-hero">
+
+                <p id="clientQuoteReference">
+                    —
+                </p>
+
+                <h1 id="clientProjectName">
+                    —
+                </h1>
+
+                <span id="clientProjectType">
+                    —
+                </span>
+
+            </section>
+
+
+            <section class="client-quote-grid">
+
+                <article>
+
+                    <span>
+                        PROJECT PRICE
+                    </span>
+
+                    <strong id="clientPrice">
+                        —
+                    </strong>
+
+                </article>
+
+
+                <article>
+
+                    <span>
+                        DEPOSIT
+                    </span>
+
+                    <strong id="clientDeposit">
+                        —
+                    </strong>
+
+                </article>
+
+
+                <article>
+
+                    <span>
+                        ESTIMATED TIMESCALE
+                    </span>
+
+                    <strong id="clientTimescale">
+                        —
+                    </strong>
+
+                </article>
+
+            </section>
+
+
+            <section class="client-scope">
+
+                <span>
+                    SCOPE OF WORK
+                </span>
+
+                <p id="clientScope">
+                    —
+                </p>
+
+            </section>
+
+
+            <section class="client-quote-footer">
+
+                <div>
+
+                    <span>
+                        QUOTE STATUS
+                    </span>
+
+                    <strong id="clientStatus">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <p>
+                    Prepared by Lucent Labs.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script src="client-quote.js"></script>
+
+</body>
+
+</html>

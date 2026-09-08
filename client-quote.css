@@ -1,0 +1,242 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(90, 90, 110, 0.12),
+            transparent 40%
+        ),
+        #050506;
+
+    color: #ffffff;
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+}
+
+.client-quote {
+    width: min(1050px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding:
+        45px 0 100px;
+}
+
+.client-quote-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 30px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+}
+
+.client-quote-brand a {
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    text-decoration: none;
+}
+
+.client-quote-brand span {
+    color:
+        rgba(255, 255, 255, 0.3);
+
+    font-size: 9px;
+
+    letter-spacing: 0.2em;
+}
+
+.client-quote-hero {
+    padding:
+        90px 0 70px;
+}
+
+.client-quote-hero > p {
+    margin-bottom: 15px;
+
+    color:
+        rgba(255, 255, 255, 0.3);
+
+    font-size: 10px;
+
+    letter-spacing: 0.15em;
+}
+
+.client-quote-hero h1 {
+    margin-bottom: 12px;
+
+    font-size:
+        clamp(45px, 8vw, 85px);
+
+    font-weight: 500;
+
+    letter-spacing: -0.05em;
+}
+
+.client-quote-hero span {
+    color:
+        rgba(255, 255, 255, 0.4);
+
+    font-size: 12px;
+}
+
+.client-quote-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+.client-quote-grid article,
+.client-scope {
+    padding: 25px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.client-quote-grid article {
+    min-height: 145px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.client-quote-grid span,
+.client-scope > span,
+.client-quote-footer span {
+    color:
+        rgba(255, 255, 255, 0.3);
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+}
+
+.client-quote-grid strong {
+    font-size: 23px;
+
+    font-weight: 500;
+}
+
+.client-scope {
+    margin-bottom: 14px;
+}
+
+.client-scope p {
+    margin-top: 22px;
+
+    color:
+        rgba(255, 255, 255, 0.72);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+}
+
+.client-quote-footer {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-end;
+
+    gap: 25px;
+
+    padding:
+        30px 5px;
+}
+
+.client-quote-footer div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.client-quote-footer strong {
+    font-size: 12px;
+}
+
+.client-quote-footer p {
+    color:
+        rgba(255, 255, 255, 0.25);
+
+    font-size: 10px;
+}
+
+.client-loading,
+.client-error {
+    min-height: 500px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    color:
+        rgba(255, 255, 255, 0.4);
+}
+
+.client-error h1 {
+    margin-bottom: 12px;
+
+    color: #ffffff;
+
+    font-weight: 500;
+}
+
+@media (max-width: 700px) {
+
+    .client-quote {
+        width:
+            min(
+                100% - 28px,
+                1050px
+            );
+    }
+
+    .client-quote-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .client-quote-footer {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}

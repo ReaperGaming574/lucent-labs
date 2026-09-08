@@ -21,6 +21,26 @@ const quoteEditMessage =
 const saveChangesButton =
     document.getElementById("saveChangesButton");
 
+const sendQuoteButton =
+    document.getElementById(
+        "sendQuoteButton"
+    );
+
+const clientLinkBox =
+    document.getElementById(
+        "clientLinkBox"
+    );
+
+const clientQuoteLink =
+    document.getElementById(
+        "clientQuoteLink"
+    );
+
+const copyQuoteLinkButton =
+    document.getElementById(
+        "copyQuoteLinkButton"
+    );    
+
 
 // =========================================
 // REFERENCE
@@ -514,6 +534,160 @@ function showError() {
 
 }
 
+// =========================================
+// SEND QUOTE
+// =========================================
+
+sendQuoteButton.addEventListener(
+    "click",
+    async () => {
+
+        sendQuoteButton.disabled =
+            true;
+
+        sendQuoteButton.textContent =
+            "Generating Link...";
+
+        quoteEditMessage.textContent =
+            "";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/admin/send-quote",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                quoteReference:
+                                    quoteReference
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error ||
+                    "Unable to send quote."
+                );
+
+            }
+
+
+            clientQuoteLink.value =
+                data.clientURL;
+
+
+            clientLinkBox.hidden =
+                false;
+
+
+            sendQuoteButton.textContent =
+                "Quote Sent";
+
+
+            sendQuoteButton.disabled =
+                false;
+
+
+            const statusElement =
+                document.getElementById(
+                    "quoteStatus"
+                );
+
+
+            statusElement.textContent =
+                "SENT";
+
+
+            statusElement.className =
+                "admin-quote-status status-sent";
+
+
+            quoteEditMessage.textContent =
+                "Quote marked as sent. Client link generated.";
+
+
+        } catch (error) {
+
+            console.error(
+                "Send quote error:",
+                error
+            );
+
+
+            quoteEditMessage.textContent =
+                error.message ||
+                "Unable to send quote.";
+
+
+            sendQuoteButton.disabled =
+                false;
+
+            sendQuoteButton.textContent =
+                "Send Quote";
+
+        }
+
+    }
+);
+
+
+// =========================================
+// COPY CLIENT LINK
+// =========================================
+
+copyQuoteLinkButton.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            await navigator.clipboard.writeText(
+                clientQuoteLink.value
+            );
+
+
+            copyQuoteLinkButton.textContent =
+                "Copied";
+
+
+            window.setTimeout(
+                () => {
+
+                    copyQuoteLinkButton.textContent =
+                        "Copy Link";
+
+                },
+                1200
+            );
+
+
+        } catch {
+
+            clientQuoteLink.select();
+
+        }
+
+    }
+);
 
 // =========================================
 // START

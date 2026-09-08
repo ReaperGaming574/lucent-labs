@@ -375,16 +375,49 @@
                                 Save Changes
                             </button>
 
-                            <button
-                                type="button"
-                                class="quote-send-button"
-                                id="sendQuoteButton"
-                                disabled
-                            >
-                                Send Quote
-                            </button>
+                           <button
+    type="button"
+    class="quote-send-button active"
+    id="sendQuoteButton"
+>
+    Send Quote
+</button>
 
                         </div>
+
+                        <div
+    class="client-link-box"
+    id="clientLinkBox"
+    hidden
+>
+
+    <span>
+        CLIENT QUOTE LINK
+    </span>
+
+    <div class="client-link-row">
+
+        <input
+            type="text"
+            id="clientQuoteLink"
+            readonly
+        >
+
+        <button
+            type="button"
+            id="copyQuoteLinkButton"
+        >
+            Copy Link
+        </button>
+
+    </div>
+
+    <p>
+        Anyone with this private link can view
+        this quote. Only share it with the client.
+    </p>
+
+</div>
 
                     </form>
 
