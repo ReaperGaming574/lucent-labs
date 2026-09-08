@@ -233,6 +233,64 @@ function escapeHTML(value) {
 
 }
 
+// =========================================
+// ACTIVE PROJECTS
+// =========================================
+
+async function loadActiveProjects() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/projects"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load projects."
+            );
+
+        }
+
+
+        const projects =
+            data.projects || [];
+
+
+        const active =
+            projects.filter(
+                project =>
+                    project.status !==
+                    "completed"
+            );
+
+
+        projectCount.textContent =
+            active.length;
+
+
+    } catch (error) {
+
+        console.error(
+            "Active projects error:",
+            error
+        );
+
+    }
+
+}
+
 
 // =========================================
 // START
