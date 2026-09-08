@@ -170,6 +170,17 @@ function renderQuote(quote) {
         )
     );
 
+    if (
+    quote.status === "accepted"
+) {
+
+    createProjectButton.hidden =
+        false;
+
+}
+
+
+
 
     // =====================================
     // STATUS
