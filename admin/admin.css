@@ -991,3 +991,187 @@ body {
     }
 
 }
+
+/* ========================================
+   QUOTE FORM
+======================================== */
+
+.quote-form {
+    padding: 28px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 12px;
+}
+
+.quote-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+}
+
+.quote-field {
+    margin-bottom: 20px;
+}
+
+.quote-field label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color:
+        rgba(255, 255, 255, 0.4);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.12em;
+}
+
+.quote-field input,
+.quote-field textarea {
+    width: 100%;
+
+    padding: 14px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: #ffffff;
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.quote-field textarea {
+    resize: vertical;
+
+    min-height: 160px;
+
+    line-height: 1.6;
+}
+
+.quote-field input:focus,
+.quote-field textarea:focus {
+    border-color:
+        rgba(255, 255, 255, 0.22);
+
+    background:
+        rgba(255, 255, 255, 0.05);
+}
+
+.money-input {
+    position: relative;
+}
+
+.money-input span {
+    position: absolute;
+
+    top: 50%;
+    left: 14px;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        rgba(255, 255, 255, 0.4);
+}
+
+.money-input input {
+    padding-left: 32px;
+}
+
+.quote-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.quote-actions button {
+    padding:
+        13px 20px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+
+    cursor: pointer;
+}
+
+.quote-save-button {
+    border:
+        1px solid #ffffff;
+
+    background: #ffffff;
+
+    color: #080808;
+}
+
+.quote-send-button {
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    color:
+        rgba(255, 255, 255, 0.25);
+
+    cursor: not-allowed !important;
+}
+
+.quote-save-button:disabled {
+    opacity: 0.5;
+
+    cursor: wait;
+}
+
+.quote-form-message {
+    min-height: 20px;
+
+    margin-bottom: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.6);
+
+    font-size: 11px;
+}
+
+
+@media (max-width: 700px) {
+
+    .quote-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quote-actions {
+        flex-direction: column;
+    }
+
+    .quote-actions button {
+        width: 100%;
+    }
+
+}

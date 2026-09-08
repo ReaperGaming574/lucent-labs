@@ -349,50 +349,150 @@
                 </section>
 
 
-                <!-- ========================================
-                     QUOTE
-                ========================================= -->
+               <!-- ========================================
+     QUOTE
+========================================= -->
 
-                <section class="admin-section">
+<section class="admin-section">
 
-                    <div class="section-heading">
+    <div class="section-heading">
 
-                        <div>
+        <div>
 
-                            <p class="section-number">
-                                03 / QUOTE
-                            </p>
+            <p class="section-number">
+                03 / QUOTE
+            </p>
 
-                            <h2>
-                                Create Quote
-                            </h2>
+            <h2>
+                Create Quote
+            </h2>
 
-                        </div>
+        </div>
 
-                    </div>
+    </div>
 
 
-                    <div class="quote-placeholder">
+    <form
+        class="quote-form"
+        id="quoteForm"
+    >
 
-                        <p>
-                            This enquiry is ready for a quote.
-                        </p>
+        <div class="quote-form-grid">
 
-                        <span>
-                            Quote creation controls are the
-                            next system to be connected.
-                        </span>
+            <div class="quote-field">
 
-                        <button
-                            type="button"
-                            disabled
-                        >
-                            Create Quote
-                        </button>
+                <label for="quotePrice">
+                    Project Price
+                </label>
 
-                    </div>
+                <div class="money-input">
 
-                </section>
+                    <span>£</span>
+
+                    <input
+                        type="number"
+                        id="quotePrice"
+                        min="0"
+                        step="0.01"
+                        placeholder="350.00"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="quote-field">
+
+                <label for="quoteDeposit">
+                    Deposit
+                </label>
+
+                <div class="money-input">
+
+                    <span>£</span>
+
+                    <input
+                        type="number"
+                        id="quoteDeposit"
+                        min="0"
+                        step="0.01"
+                        placeholder="175.00"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="quote-field">
+
+            <label for="quoteTimescale">
+                Estimated Timescale
+            </label>
+
+            <input
+                type="text"
+                id="quoteTimescale"
+                maxlength="100"
+                placeholder="e.g. 2–4 weeks"
+                required
+            >
+
+        </div>
+
+
+        <div class="quote-field">
+
+            <label for="quoteScope">
+                Scope of Work
+            </label>
+
+            <textarea
+                id="quoteScope"
+                rows="8"
+                maxlength="5000"
+                placeholder="Describe what Lucent Labs will deliver..."
+                required
+            ></textarea>
+
+        </div>
+
+
+        <div
+            class="quote-form-message"
+            id="quoteMessage"
+            role="alert"
+        ></div>
+
+
+        <div class="quote-actions">
+
+            <button
+                type="submit"
+                class="quote-save-button"
+                id="saveQuoteButton"
+            >
+                Save Draft
+            </button>
+
+
+            <button
+                type="button"
+                class="quote-send-button"
+                disabled
+            >
+                Send Quote
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
 
             </div>
 

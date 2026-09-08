@@ -18,9 +18,24 @@ const enquiryContent =
         "enquiryContent"
     );
 
+const quoteForm =
+    document.getElementById(
+        "quoteForm"
+    );
+
+const quoteMessage =
+    document.getElementById(
+        "quoteMessage"
+    );
+
+const saveQuoteButton =
+    document.getElementById(
+        "saveQuoteButton"
+    );
+
 
 // =========================================
-// GET REFERENCE FROM URL
+// REFERENCE
 // =========================================
 
 const params =
@@ -41,7 +56,6 @@ async function loadEnquiry() {
     if (!reference) {
 
         showError();
-
         return;
 
     }
@@ -56,12 +70,10 @@ async function loadEnquiry() {
                 )}`,
                 {
                     method: "GET",
-
                     headers: {
                         "Accept":
                             "application/json"
                     },
-
                     cache: "no-store"
                 }
             );
@@ -105,7 +117,6 @@ async function loadEnquiry() {
             error
         );
 
-
         showError();
 
     }
@@ -140,10 +151,6 @@ function renderEnquiry(enquiry) {
     );
 
 
-    // =====================================
-    // CLIENT
-    // =====================================
-
     setText(
         "clientName",
         enquiry.client_name
@@ -160,10 +167,6 @@ function renderEnquiry(enquiry) {
         "Not provided"
     );
 
-
-    // =====================================
-    // PROJECT
-    // =====================================
 
     setText(
         "projectBudget",
@@ -193,10 +196,6 @@ function renderEnquiry(enquiry) {
     );
 
 
-    // =====================================
-    // SHOW CONTENT
-    // =====================================
-
     enquiryLoading.hidden =
         true;
 
@@ -210,7 +209,201 @@ function renderEnquiry(enquiry) {
 
 
 // =========================================
-// SET TEXT SAFELY
+// SAVE QUOTE
+// =========================================
+
+quoteForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const price =
+            document.getElementById(
+                "quotePrice"
+            ).value;
+
+        const deposit =
+            document.getElementById(
+                "quoteDeposit"
+            ).value;
+
+        const timescale =
+            document.getElementById(
+                "quoteTimescale"
+            ).value.trim();
+
+        const scope =
+            document.getElementById(
+                "quoteScope"
+            ).value.trim();
+
+
+        quoteMessage.textContent =
+            "";
+
+
+        if (
+            !price ||
+            !timescale ||
+            !scope
+        ) {
+
+            quoteMessage.textContent =
+                "Please complete all required quote fields.";
+
+            return;
+
+        }
+
+
+        const priceNumber =
+            Number(price);
+
+        const depositNumber =
+            deposit
+                ? Number(deposit)
+                : 0;
+
+
+        if (
+            !Number.isFinite(priceNumber) ||
+            priceNumber <= 0
+        ) {
+
+            quoteMessage.textContent =
+                "Enter a valid project price.";
+
+            return;
+
+        }
+
+
+        if (
+            !Number.isFinite(depositNumber) ||
+            depositNumber < 0
+        ) {
+
+            quoteMessage.textContent =
+                "Enter a valid deposit.";
+
+            return;
+
+        }
+
+
+        if (
+            depositNumber >
+            priceNumber
+        ) {
+
+            quoteMessage.textContent =
+                "The deposit cannot be greater than the project price.";
+
+            return;
+
+        }
+
+
+        saveQuoteButton.disabled =
+            true;
+
+        saveQuoteButton.textContent =
+            "Saving...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/admin/create-quote",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                enquiryReference:
+                                    reference,
+
+                                price:
+                                    priceNumber,
+
+                                deposit:
+                                    depositNumber,
+
+                                timescale:
+                                    timescale,
+
+                                scope:
+                                    scope
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error ||
+                    "Unable to save quote."
+                );
+
+            }
+
+
+            quoteMessage.textContent =
+                `Draft saved — ${data.quoteReference}`;
+
+            saveQuoteButton.textContent =
+                "Draft Saved";
+
+
+            setText(
+                "enquiryStatus",
+                "quoted"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Quote error:",
+                error
+            );
+
+
+            quoteMessage.textContent =
+                error.message ||
+                "Unable to save quote.";
+
+
+            saveQuoteButton.disabled =
+                false;
+
+            saveQuoteButton.textContent =
+                "Save Draft";
+
+        }
+
+    }
+);
+
+
+// =========================================
+// SET TEXT
 // =========================================
 
 function setText(
