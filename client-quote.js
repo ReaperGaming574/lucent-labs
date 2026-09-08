@@ -1,3 +1,8 @@
+// =========================================
+// LUCENT LABS
+// CLIENT QUOTE
+// =========================================
+
 const loading =
     document.getElementById(
         "clientQuoteLoading"
@@ -13,7 +18,8 @@ const content =
         "clientQuoteContent"
     );
 
-    const acceptQuoteButton =
+
+const acceptQuoteButton =
     document.getElementById(
         "acceptQuoteButton"
     );
@@ -22,6 +28,7 @@ const declineQuoteButton =
     document.getElementById(
         "declineQuoteButton"
     );
+
 
 const quoteResponse =
     document.getElementById(
@@ -34,16 +41,7 @@ const quoteResponseMessage =
     );
 
 
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-
-const token =
-    params.get("token");
-
-    const quotePayment =
+const quotePayment =
     document.getElementById(
         "quotePayment"
     );
@@ -64,13 +62,34 @@ const quotePaymentMessage =
     );
 
 
+// =========================================
+// URL
+// =========================================
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const token =
+    params.get("token");
+
+
+// Store the loaded quote so we can update
+// the page immediately after acceptance.
+
+let currentQuote = null;
+
+
+// =========================================
+// LOAD QUOTE
+// =========================================
+
 async function loadClientQuote() {
 
     if (!token) {
-
         showError();
         return;
-
     }
 
 
@@ -97,102 +116,19 @@ async function loadClientQuote() {
             !data.success ||
             !data.quote
         ) {
-
             throw new Error(
                 "Quote unavailable."
             );
-
         }
 
 
-        const quote =
+        currentQuote =
             data.quote;
 
 
-        setText(
-            "clientQuoteReference",
-            quote.quote_reference
+        renderQuote(
+            currentQuote
         );
-
-        setText(
-            "clientProjectName",
-            quote.project_name
-        );
-
-        setText(
-            "clientProjectType",
-            quote.project_type
-        );
-
-        setText(
-            "clientPrice",
-            formatMoney(
-                quote.price_pence
-            )
-        );
-
-        setText(
-            "clientDeposit",
-            formatMoney(
-                quote.deposit_pence
-            )
-        );
-
-        setText(
-            "clientTimescale",
-            quote.estimated_timescale
-        );
-
-        setText(
-            "clientScope",
-            quote.scope
-        );
-
-        setText(
-            "clientStatus",
-            String(
-                quote.status
-            ).toUpperCase()
-        );
-
-        // =========================================
-// PAYMENT SECTION
-// =========================================
-
-if (
-    quote.status === "accepted"
-) {
-    quotePayment.hidden =
-        false;
-
-    quotePaymentAmount.textContent =
-        formatMoney(
-            quote.deposit_pence
-        );
-}
-
-        if (
-    quote.status === "accepted" ||
-    quote.status === "declined"
-) {
-
-    acceptQuoteButton.disabled =
-        true;
-
-    declineQuoteButton.disabled =
-        true;
-
-
-    quoteResponseMessage.hidden =
-        false;
-
-
-    quoteResponseMessage.textContent =
-        quote.status === "accepted"
-            ? "This quote has already been accepted."
-            : "This quote has already been declined.";
-
-}
 
 
         loading.hidden =
@@ -202,7 +138,12 @@ if (
             false;
 
 
-    } catch {
+    } catch (loadError) {
+
+        console.error(
+            "Quote load error:",
+            loadError
+        );
 
         showError();
 
@@ -211,58 +152,129 @@ if (
 }
 
 
-function formatMoney(pence) {
+// =========================================
+// RENDER QUOTE
+// =========================================
 
-    return new Intl.NumberFormat(
-        "en-GB",
-        {
-            style: "currency",
-            currency: "GBP"
-        }
-    ).format(
-        Number(pence || 0) /
-        100
+function renderQuote(quote) {
+
+    setText(
+        "clientQuoteReference",
+        quote.quote_reference
     );
 
-}
+    setText(
+        "clientProjectName",
+        quote.project_name
+    );
+
+    setText(
+        "clientProjectType",
+        quote.project_type
+    );
+
+    setText(
+        "clientPrice",
+        formatMoney(
+            quote.price_pence
+        )
+    );
+
+    setText(
+        "clientDeposit",
+        formatMoney(
+            quote.deposit_pence
+        )
+    );
+
+    setText(
+        "clientTimescale",
+        quote.estimated_timescale
+    );
+
+    setText(
+        "clientScope",
+        quote.scope
+    );
+
+    setText(
+        "clientStatus",
+        String(
+            quote.status
+        ).toUpperCase()
+    );
 
 
-function setText(
-    id,
-    value
-) {
+    // =========================================
+    // PAYMENT
+    // =========================================
 
-    const element =
-        document.getElementById(id);
+    if (
+        quote.status ===
+        "accepted"
+    ) {
+
+        showPaymentSection(
+            quote
+        );
+
+    } else {
+
+        quotePayment.hidden =
+            true;
+
+    }
 
 
-    if (element) {
+    // =========================================
+    // RESPONSE STATE
+    // =========================================
 
-        element.textContent =
-            String(
-                value ?? "—"
-            );
+    if (
+        quote.status === "accepted" ||
+        quote.status === "declined"
+    ) {
+
+        acceptQuoteButton.disabled =
+            true;
+
+        declineQuoteButton.disabled =
+            true;
+
+
+        quoteResponseMessage.hidden =
+            false;
+
+
+        quoteResponseMessage.textContent =
+            quote.status === "accepted"
+                ? "This quote has been accepted."
+                : "This quote has been declined.";
 
     }
 
 }
 
 
-function showError() {
+// =========================================
+// PAYMENT SECTION
+// =========================================
 
-    loading.hidden =
-        true;
+function showPaymentSection(
+    quote
+) {
 
-    content.hidden =
-        true;
-
-    error.hidden =
+    quotePayment.hidden =
         false;
+
+
+    quotePaymentAmount.textContent =
+        formatMoney(
+            quote.deposit_pence
+        );
 
 }
 
-
-loadClientQuote();
 
 // =========================================
 // QUOTE RESPONSE
@@ -295,7 +307,8 @@ async function respondToQuote(
             await fetch(
                 "/api/respond-quote",
                 {
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
                         "Content-Type":
@@ -304,11 +317,8 @@ async function respondToQuote(
 
                     body:
                         JSON.stringify({
-                            token:
-                                token,
-
-                            decision:
-                                decision
+                            token,
+                            decision
                         })
                 }
             );
@@ -322,12 +332,18 @@ async function respondToQuote(
             !response.ok ||
             !data.success
         ) {
-
             throw new Error(
                 data.error ||
                 "Unable to update quote."
             );
+        }
 
+
+        // Update local quote state.
+
+        if (currentQuote) {
+            currentQuote.status =
+                data.status;
         }
 
 
@@ -345,7 +361,14 @@ async function respondToQuote(
         ) {
 
             quoteResponseMessage.textContent =
-                "Quote accepted. Lucent Labs will be in touch with the next steps.";
+                "Quote accepted. Your project deposit can now be paid below.";
+
+
+            if (currentQuote) {
+                showPaymentSection(
+                    currentQuote
+                );
+            }
 
         }
 
@@ -358,6 +381,10 @@ async function respondToQuote(
             quoteResponseMessage.textContent =
                 "Quote declined.";
 
+
+            quotePayment.hidden =
+                true;
+
         }
 
 
@@ -366,16 +393,16 @@ async function respondToQuote(
         );
 
 
-    } catch (error) {
+    } catch (responseError) {
 
         console.error(
             "Quote response error:",
-            error
+            responseError
         );
 
 
         quoteResponseMessage.textContent =
-            error.message ||
+            responseError.message ||
             "Unable to update quote.";
 
 
@@ -389,6 +416,7 @@ async function respondToQuote(
 
 }
 
+
 // =========================================
 // PAY DEPOSIT
 // =========================================
@@ -396,26 +424,19 @@ async function respondToQuote(
 payDepositButton.addEventListener(
     "click",
     async () => {
+
         payDepositButton.disabled =
             true;
 
         payDepositButton.textContent =
             "Opening Secure Checkout...";
 
+
         quotePaymentMessage.hidden =
             true;
 
 
         try {
-            const params =
-                new URLSearchParams(
-                    window.location.search
-                );
-
-
-            const token =
-                params.get("token");
-
 
             if (!token) {
                 throw new Error(
@@ -463,10 +484,11 @@ payDepositButton.addEventListener(
                 data.checkoutUrl;
 
 
-        } catch (error) {
+        } catch (paymentError) {
+
             console.error(
                 "Deposit payment error:",
-                error
+                paymentError
             );
 
 
@@ -474,7 +496,7 @@ payDepositButton.addEventListener(
                 false;
 
             quotePaymentMessage.textContent =
-                error.message;
+                paymentError.message;
 
 
             payDepositButton.disabled =
@@ -482,9 +504,12 @@ payDepositButton.addEventListener(
 
             payDepositButton.textContent =
                 "Pay Deposit";
+
         }
+
     }
 );
+
 
 // =========================================
 // BUTTONS
@@ -512,3 +537,71 @@ declineQuoteButton.addEventListener(
 
     }
 );
+
+
+// =========================================
+// HELPERS
+// =========================================
+
+function formatMoney(pence) {
+
+    return new Intl.NumberFormat(
+        "en-GB",
+        {
+            style:
+                "currency",
+
+            currency:
+                "GBP"
+        }
+    ).format(
+        Number(
+            pence || 0
+        ) / 100
+    );
+
+}
+
+
+function setText(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (element) {
+
+        element.textContent =
+            String(
+                value ?? "—"
+            );
+
+    }
+
+}
+
+
+function showError() {
+
+    loading.hidden =
+        true;
+
+    content.hidden =
+        true;
+
+    error.hidden =
+        false;
+
+}
+
+
+// =========================================
+// START
+// =========================================
+
+loadClientQuote();
