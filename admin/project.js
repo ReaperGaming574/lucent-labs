@@ -129,6 +129,62 @@ function formatDate(value) {
 }
 
 
+function formatPaymentStatus(status) {
+
+    const statuses = {
+
+        unpaid:
+            "UNPAID",
+
+        payment_pending:
+            "PAYMENT PENDING",
+
+        deposit_paid:
+            "DEPOSIT PAID",
+
+        paid_in_full:
+            "PAID IN FULL",
+
+        refunded:
+            "REFUNDED"
+
+    };
+
+
+    return (
+        statuses[status] ||
+        "UNPAID"
+    );
+
+}
+
+
+function formatPaymentMethod(method) {
+
+    const methods = {
+
+        stripe:
+            "Card / Stripe",
+
+        bank_transfer:
+            "Bank Transfer",
+
+        cash:
+            "Cash",
+
+        other:
+            "Other"
+
+    };
+
+
+    return (
+        methods[method] ||
+        "Not selected"
+    );
+
+}
+
 function renderProject(project) {
 
     setText(
@@ -194,6 +250,68 @@ function renderProject(project) {
             project.status
         )
     );
+
+    // =========================================
+// PAYMENT
+// =========================================
+
+const total =
+    Number(
+        project.price_pence || 0
+    );
+
+const deposit =
+    Number(
+        project.deposit_pence || 0
+    );
+
+const paid =
+    Number(
+        project.amount_paid_pence || 0
+    );
+
+const remaining =
+    Math.max(
+        total - paid,
+        0
+    );
+
+
+setText(
+    "paymentTotal",
+    formatMoney(total)
+);
+
+setText(
+    "paymentDeposit",
+    formatMoney(deposit)
+);
+
+setText(
+    "paymentPaid",
+    formatMoney(paid)
+);
+
+setText(
+    "paymentRemaining",
+    formatMoney(remaining)
+);
+
+
+setText(
+    "paymentStatus",
+    formatPaymentStatus(
+        project.payment_status
+    )
+);
+
+
+setText(
+    "paymentMethod",
+    formatPaymentMethod(
+        project.payment_method
+    )
+);
 
 }
 

@@ -72,7 +72,13 @@ export async function onRequestGet(context) {
                         scope,
                         estimated_timescale,
 
-                        status,
+                       status,
+
+                        payment_status,
+                        payment_method,
+                        amount_paid_pence,
+                        deposit_paid_at,
+                        paid_in_full_at,
 
                         created_at,
                         updated_at,

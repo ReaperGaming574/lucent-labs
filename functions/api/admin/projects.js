@@ -53,6 +53,12 @@ export async function onRequestGet(context) {
                         started_at,
                         completed_at
 
+                        payment_status,
+                        payment_method,
+                        amount_paid_pence,
+                        deposit_paid_at,
+                        paid_in_full_at,
+
                     FROM projects
 
                     ORDER BY created_at DESC
