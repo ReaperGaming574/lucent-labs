@@ -13,6 +13,26 @@ const content =
         "clientQuoteContent"
     );
 
+    const acceptQuoteButton =
+    document.getElementById(
+        "acceptQuoteButton"
+    );
+
+const declineQuoteButton =
+    document.getElementById(
+        "declineQuoteButton"
+    );
+
+const quoteResponse =
+    document.getElementById(
+        "quoteResponse"
+    );
+
+const quoteResponseMessage =
+    document.getElementById(
+        "quoteResponseMessage"
+    );
+
 
 const params =
     new URLSearchParams(
@@ -114,6 +134,28 @@ async function loadClientQuote() {
                 quote.status
             ).toUpperCase()
         );
+        if (
+    quote.status === "accepted" ||
+    quote.status === "declined"
+) {
+
+    acceptQuoteButton.disabled =
+        true;
+
+    declineQuoteButton.disabled =
+        true;
+
+
+    quoteResponseMessage.hidden =
+        false;
+
+
+    quoteResponseMessage.textContent =
+        quote.status === "accepted"
+            ? "This quote has already been accepted."
+            : "This quote has already been declined.";
+
+}
 
 
         loading.hidden =
@@ -184,3 +226,156 @@ function showError() {
 
 
 loadClientQuote();
+
+// =========================================
+// QUOTE RESPONSE
+// =========================================
+
+async function respondToQuote(
+    decision
+) {
+
+    acceptQuoteButton.disabled =
+        true;
+
+    declineQuoteButton.disabled =
+        true;
+
+
+    quoteResponseMessage.hidden =
+        false;
+
+
+    quoteResponseMessage.textContent =
+        decision === "accepted"
+            ? "Accepting quote..."
+            : "Declining quote...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/respond-quote",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            token:
+                                token,
+
+                            decision:
+                                decision
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to update quote."
+            );
+
+        }
+
+
+        setText(
+            "clientStatus",
+            String(
+                data.status
+            ).toUpperCase()
+        );
+
+
+        if (
+            data.status ===
+            "accepted"
+        ) {
+
+            quoteResponseMessage.textContent =
+                "Quote accepted. Lucent Labs will be in touch with the next steps.";
+
+        }
+
+
+        if (
+            data.status ===
+            "declined"
+        ) {
+
+            quoteResponseMessage.textContent =
+                "Quote declined.";
+
+        }
+
+
+        quoteResponse.classList.add(
+            "quote-response-complete"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Quote response error:",
+            error
+        );
+
+
+        quoteResponseMessage.textContent =
+            error.message ||
+            "Unable to update quote.";
+
+
+        acceptQuoteButton.disabled =
+            false;
+
+        declineQuoteButton.disabled =
+            false;
+
+    }
+
+}
+
+
+// =========================================
+// BUTTONS
+// =========================================
+
+acceptQuoteButton.addEventListener(
+    "click",
+    () => {
+
+        respondToQuote(
+            "accepted"
+        );
+
+    }
+);
+
+
+declineQuoteButton.addEventListener(
+    "click",
+    () => {
+
+        respondToQuote(
+            "declined"
+        );
+
+    }
+);
