@@ -57,7 +57,7 @@ export async function onRequestGet(context) {
                         payment_method,
                         amount_paid_pence,
                         deposit_paid_at,
-                        paid_in_full_at,
+                        paid_in_full_at
 
                     FROM projects
 
