@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Enquiry | Lucent Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- ========================================
+             SIDEBAR
+        ========================================= -->
+
+        <aside class="admin-sidebar">
+
+            <div class="admin-brand">
+
+                <a href="/">
+                    LUCENT LABS
+                </a>
+
+                <span>
+                    ADMIN
+                </span>
+
+            </div>
+
+
+            <nav class="admin-nav">
+
+                <a
+                    href="/admin/"
+                    class="admin-nav-link"
+                >
+                    <span>01</span>
+                    Dashboard
+                </a>
+
+                <a
+                    href="/admin/"
+                    class="admin-nav-link active"
+                >
+                    <span>02</span>
+                    Enquiries
+                </a>
+
+                <a
+                    href="#"
+                    class="admin-nav-link"
+                >
+                    <span>03</span>
+                    Quotes
+                </a>
+
+                <a
+                    href="#"
+                    class="admin-nav-link"
+                >
+                    <span>04</span>
+                    Projects
+                </a>
+
+            </nav>
+
+
+            <div class="admin-sidebar-footer">
+
+                <a href="/">
+                    ← Return to Website
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ========================================
+             MAIN
+        ========================================= -->
+
+        <main class="admin-main">
+
+            <a
+                href="/admin/"
+                class="admin-back"
+            >
+                ← Back to Dashboard
+            </a>
+
+
+            <!-- ========================================
+                 LOADING
+            ========================================= -->
+
+            <div
+                class="enquiry-page-loading"
+                id="enquiryLoading"
+            >
+
+                <span class="loading-dot"></span>
+
+                Loading enquiry...
+
+            </div>
+
+
+            <!-- ========================================
+                 ERROR
+            ========================================= -->
+
+            <div
+                class="enquiry-page-error"
+                id="enquiryError"
+                hidden
+            >
+
+                <p>
+                    Unable to load this enquiry.
+                </p>
+
+                <a href="/admin/">
+                    Return to Dashboard
+                </a>
+
+            </div>
+
+
+            <!-- ========================================
+                 ENQUIRY
+            ========================================= -->
+
+            <div
+                id="enquiryContent"
+                hidden
+            >
+
+                <header class="enquiry-header">
+
+                    <div>
+
+                        <p
+                            class="enquiry-page-reference"
+                            id="enquiryReference"
+                        >
+                            —
+                        </p>
+
+                        <h1
+                            id="enquiryProjectName"
+                        >
+                            —
+                        </h1>
+
+                        <p
+                            class="enquiry-page-type"
+                            id="enquiryProjectType"
+                        >
+                            —
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="enquiry-status"
+                        id="enquiryStatus"
+                    >
+                        —
+                    </span>
+
+                </header>
+
+
+                <!-- ========================================
+                     CLIENT
+                ========================================= -->
+
+                <section class="admin-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="section-number">
+                                01 / CLIENT
+                            </p>
+
+                            <h2>
+                                Client Details
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-grid">
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Name
+                            </span>
+
+                            <strong id="clientName">
+                                —
+                            </strong>
+
+                        </article>
+
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Email
+                            </span>
+
+                            <strong id="clientEmail">
+                                —
+                            </strong>
+
+                        </article>
+
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Discord
+                            </span>
+
+                            <strong id="clientDiscord">
+                                —
+                            </strong>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ========================================
+                     PROJECT
+                ========================================= -->
+
+                <section class="admin-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="section-number">
+                                02 / PROJECT
+                            </p>
+
+                            <h2>
+                                Project Details
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-grid two-column">
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Budget
+                            </span>
+
+                            <strong id="projectBudget">
+                                —
+                            </strong>
+
+                        </article>
+
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Requested Timescale
+                            </span>
+
+                            <strong id="projectDeadline">
+                                —
+                            </strong>
+
+                        </article>
+
+                    </div>
+
+
+                    <article class="content-card">
+
+                        <span class="detail-label">
+                            Project Description
+                        </span>
+
+                        <p id="projectDescription">
+                            —
+                        </p>
+
+                    </article>
+
+
+                    <article class="content-card">
+
+                        <span class="detail-label">
+                            Features / Requirements
+                        </span>
+
+                        <p id="projectFeatures">
+                            —
+                        </p>
+
+                    </article>
+
+
+                    <article class="content-card">
+
+                        <span class="detail-label">
+                            References
+                        </span>
+
+                        <p id="projectReferences">
+                            —
+                        </p>
+
+                    </article>
+
+                </section>
+
+
+                <!-- ========================================
+                     QUOTE
+                ========================================= -->
+
+                <section class="admin-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="section-number">
+                                03 / QUOTE
+                            </p>
+
+                            <h2>
+                                Create Quote
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quote-placeholder">
+
+                        <p>
+                            This enquiry is ready for a quote.
+                        </p>
+
+                        <span>
+                            Quote creation controls are the
+                            next system to be connected.
+                        </span>
+
+                        <button
+                            type="button"
+                            disabled
+                        >
+                            Create Quote
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="enquiry.js"></script>
+
+</body>
+
+</html>
