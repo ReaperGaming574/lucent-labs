@@ -23,30 +23,223 @@
 <body>
 
 
-    <!-- NAVIGATION -->
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
 
     <nav class="navbar">
 
-       <a href="index.html" class="brand-logo">
-    <img src="images/lucent-logo.png" alt="Lucent Labs">
-</a>
+        <a
+            href="index.html"
+            class="brand-logo"
+        >
+            <img
+                src="images/lucent-logo.png"
+                alt="Lucent Labs"
+            >
+        </a>
+
+
+        <!-- DESKTOP NAVIGATION -->
 
         <div class="nav-links">
 
-            <a href="#home">Home</a>
+            <a href="#home">
+                Home
+            </a>
 
-            <a href="#work">Work</a>
+            <a href="#work">
+                Work
+            </a>
 
-            <a href="#services">Services</a>
+            <a href="#services">
+                Services
+            </a>
 
-            <a href="#contact">Contact</a>
+            <a href="#contact">
+                Contact
+            </a>
 
         </div>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            aria-label="Open navigation"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
 
     </nav>
 
 
-    <!-- HERO SECTION -->
+    <!-- =========================================
+         MOBILE MENU OVERLAY
+    ========================================== -->
+
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+    ></div>
+
+
+    <!-- =========================================
+         MOBILE SIDE MENU
+    ========================================== -->
+
+    <aside
+        class="mobile-menu"
+        id="mobileMenu"
+        aria-hidden="true"
+    >
+
+        <div class="mobile-menu-top">
+
+            <div>
+
+                <span class="mobile-menu-label">
+                    LUCENT LABS
+                </span>
+
+                <p>
+                    Navigation
+                </p>
+
+            </div>
+
+
+            <button
+                class="mobile-menu-close"
+                id="mobileMenuClose"
+                aria-label="Close navigation"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <nav class="mobile-menu-nav">
+
+            <a href="#home">
+
+                <span>
+                    01
+                </span>
+
+                <strong>
+                    Home
+                </strong>
+
+            </a>
+
+
+            <a href="#work">
+
+                <span>
+                    02
+                </span>
+
+                <strong>
+                    Our Work
+                </strong>
+
+            </a>
+
+
+            <a href="#services">
+
+                <span>
+                    03
+                </span>
+
+                <strong>
+                    Services
+                </strong>
+
+            </a>
+
+
+            <a href="websites.html">
+
+                <span>
+                    04
+                </span>
+
+                <strong>
+                    Websites
+                </strong>
+
+            </a>
+
+
+            <a href="games.html">
+
+                <span>
+                    05
+                </span>
+
+                <strong>
+                    Games
+                </strong>
+
+            </a>
+
+
+            <a href="software.html">
+
+                <span>
+                    06
+                </span>
+
+                <strong>
+                    Software
+                </strong>
+
+            </a>
+
+
+            <a href="#contact">
+
+                <span>
+                    07
+                </span>
+
+                <strong>
+                    Contact
+                </strong>
+
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-footer">
+
+            <span>
+                WEB • GAMES • SOFTWARE
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
 
     <section
         class="hero"
@@ -60,14 +253,16 @@
             </p>
 
             <h1>
-               Digital experiences built to stand out.
+                Digital experiences built to stand out.
             </h1>
 
             <p class="hero-description">
 
-                We help businesses, brands, and communities bring ideas to life through websites, games, and software.
+                We help businesses, brands, and communities bring
+                ideas to life through websites, games, and software.
 
             </p>
+
 
             <div class="hero-buttons">
 
@@ -92,121 +287,134 @@
     </section>
 
 
-    <!-- WORK -->
+    <!-- =========================================
+         WORK
+    ========================================== -->
 
     <section
-    class="section"
-    id="work"
->
+        class="section"
+        id="work"
+    >
 
-    <p class="section-label">
-        WHAT WE BUILD
-    </p>
-
-    <h2>
-        Explore our work
-    </h2>
-
-   <div class="work-categories">
-
-    <!-- WEBSITES -->
-    <div class="work-category">
-
-        <div class="category-image">
-            <img
-                src="images/websites-preview.png"
-                alt="Website development"
-            >
-        </div>
-
-        <span class="category-number">
-            01
-        </span>
-
-        <h3>
-            Websites
-        </h3>
-
-        <p>
-            Modern, responsive websites
-            designed for businesses,
-            brands and communities.
+        <p class="section-label">
+            WHAT WE BUILD
         </p>
 
-        <a href="websites.html">
-            Explore Websites →
-        </a>
-
-    </div>
+        <h2>
+            Explore our work
+        </h2>
 
 
-    <!-- GAMES -->
-    <div class="work-category">
+        <div class="work-categories">
 
-        <div class="category-image">
-            <img
-                src="images/games-preview.png"
-                alt="Game development"
-            >
+
+            <!-- WEBSITES -->
+
+            <div class="work-category">
+
+                <div class="category-image">
+
+                    <img
+                        src="images/websites-preview.png"
+                        alt="Website development"
+                    >
+
+                </div>
+
+
+                <span class="category-number">
+                    01
+                </span>
+
+                <h3>
+                    Websites
+                </h3>
+
+                <p>
+                    Modern, responsive websites designed for
+                    businesses, brands and communities.
+                </p>
+
+                <a href="websites.html">
+                    Explore Websites →
+                </a>
+
+            </div>
+
+
+            <!-- GAMES -->
+
+            <div class="work-category">
+
+                <div class="category-image">
+
+                    <img
+                        src="images/games-preview.png"
+                        alt="Game development"
+                    >
+
+                </div>
+
+                <span class="category-number">
+                    02
+                </span>
+
+                <h3>
+                    Games
+                </h3>
+
+                <p>
+                    Interactive experiences and game development,
+                    including projects built on Roblox.
+                </p>
+
+                <a href="games.html">
+                    Explore Games →
+                </a>
+
+            </div>
+
+
+            <!-- SOFTWARE -->
+
+            <div class="work-category">
+
+                <div class="category-image">
+
+                    <img
+                        src="images/software-preview.png"
+                        alt="Software development"
+                    >
+
+                </div>
+
+                <span class="category-number">
+                    03
+                </span>
+
+                <h3>
+                    Software
+                </h3>
+
+                <p>
+                    Tools, applications and custom software built
+                    around real-world ideas and problems.
+                </p>
+
+                <a href="software.html">
+                    Explore Software →
+                </a>
+
+            </div>
+
         </div>
 
-        <span class="category-number">
-            02
-        </span>
-
-        <h3>
-            Games
-        </h3>
-
-        <p>
-            Interactive experiences and
-            game development, including
-            projects built on Roblox.
-        </p>
-
-        <a href="games.html">
-            Explore Games →
-        </a>
-
-    </div>
+    </section>
 
 
-    <!-- SOFTWARE -->
-    <div class="work-category">
-
-        <div class="category-image">
-            <img
-                src="images/software-preview.png"
-                alt="Software development"
-            >
-        </div>
-
-        <span class="category-number">
-            03
-        </span>
-
-        <h3>
-            Software
-        </h3>
-
-        <p>
-            Tools, applications and
-            custom software built around
-            real-world ideas and problems.
-        </p>
-
-        <a href="software.html">
-            Explore Software →
-        </a>
-
-    </div>
-
-</div>
-
-</section>
-
-
-    <!-- SERVICES -->
+    <!-- =========================================
+         SERVICES
+    ========================================== -->
 
     <section
         class="section"
@@ -221,7 +429,9 @@
             What we can build
         </h2>
 
+
         <div class="services">
+
 
             <div class="service">
 
@@ -230,7 +440,8 @@
                 </h3>
 
                 <p>
-                   Modern, responsive websites for businesses, brands, and communities.
+                    Modern, responsive websites for businesses,
+                    brands, and communities.
                 </p>
 
             </div>
@@ -243,7 +454,8 @@
                 </h3>
 
                 <p>
-                   Interactive experiences and game systems, including Roblox development.
+                    Interactive experiences and game systems,
+                    including Roblox development.
                 </p>
 
             </div>
@@ -252,11 +464,12 @@
             <div class="service">
 
                 <h3>
-                   Software Development
+                    Software Development
                 </h3>
 
                 <p>
-                    Custom tools, applications, and digital systems built around specific needs.
+                    Custom tools, applications, and digital systems
+                    built around specific needs.
                 </p>
 
             </div>
@@ -266,7 +479,9 @@
     </section>
 
 
-    <!-- CONTACT -->
+    <!-- =========================================
+         CONTACT
+    ========================================== -->
 
     <section
         class="contact"
@@ -282,7 +497,8 @@
         </h2>
 
         <p>
-           Web, games, or software - let’s build something that stands out.
+            Web, games, or software — let’s build something
+            that stands out.
         </p>
 
         <a
@@ -295,7 +511,9 @@
     </section>
 
 
-    <!-- FOOTER -->
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
 
     <footer>
 
