@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Start a project with Lucent Labs."
+    >
+
+    <title>Start a Project | Lucent Labs</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+
+    <!-- =============================================
+         NAVIGATION
+    ============================================== -->
+
+    <nav class="navbar">
+
+        <a
+            href="index.html"
+            class="brand-logo"
+        >
+
+            <img
+                src="images/lucent-logo.png"
+                alt="Lucent Labs"
+            >
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="websites.html">
+                Websites
+            </a>
+
+            <a href="games.html">
+                Games
+            </a>
+
+            <a href="software.html">
+                Software
+            </a>
+
+        </div>
+
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            aria-label="Open navigation"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </nav>
+
+
+    <!-- =============================================
+         MOBILE OVERLAY
+    ============================================== -->
+
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+    ></div>
+
+
+    <!-- =============================================
+         MOBILE MENU
+    ============================================== -->
+
+    <aside
+        class="mobile-menu"
+        id="mobileMenu"
+        aria-hidden="true"
+    >
+
+        <div class="mobile-menu-top">
+
+            <div>
+
+                <span class="mobile-menu-label">
+                    LUCENT LABS
+                </span>
+
+                <p>
+                    Navigation
+                </p>
+
+            </div>
+
+
+            <button
+                class="mobile-menu-close"
+                id="mobileMenuClose"
+                aria-label="Close navigation"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <nav class="mobile-menu-nav">
+
+            <a href="index.html">
+                <span>01</span>
+                <strong>Home</strong>
+            </a>
+
+            <a href="websites.html">
+                <span>02</span>
+                <strong>Websites</strong>
+            </a>
+
+            <a href="games.html">
+                <span>03</span>
+                <strong>Games</strong>
+            </a>
+
+            <a href="software.html">
+                <span>04</span>
+                <strong>Software</strong>
+            </a>
+
+            <a href="start-project.html">
+                <span>05</span>
+                <strong>Start a Project</strong>
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-footer">
+
+            <span>
+                WEB • GAMES • SOFTWARE
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =============================================
+         PROJECT ENQUIRY
+    ============================================== -->
+
+    <main class="project-enquiry">
+
+
+        <!-- HEADER -->
+
+        <div class="project-enquiry-header">
+
+            <p class="section-label">
+                START A PROJECT
+            </p>
+
+            <h1>
+                Tell us what you're building.
+            </h1>
+
+            <p>
+                Give us an overview of your project and we'll review
+                your requirements before discussing the next steps.
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             PROGRESS
+        ========================================== -->
+
+        <div
+            class="project-progress"
+            id="projectProgress"
+        >
+
+            <div
+                class="progress-item active"
+                data-progress="1"
+            >
+
+                <span>
+                    01
+                </span>
+
+                <p>
+                    Type
+                </p>
+
+            </div>
+
+
+            <div
+                class="progress-item"
+                data-progress="2"
+            >
+
+                <span>
+                    02
+                </span>
+
+                <p>
+                    Details
+                </p>
+
+            </div>
+
+
+            <div
+                class="progress-item"
+                data-progress="3"
+            >
+
+                <span>
+                    03
+                </span>
+
+                <p>
+                    Budget
+                </p>
+
+            </div>
+
+
+            <div
+                class="progress-item"
+                data-progress="4"
+            >
+
+                <span>
+                    04
+                </span>
+
+                <p>
+                    Contact
+                </p>
+
+            </div>
+
+
+            <div
+                class="progress-item"
+                data-progress="5"
+            >
+
+                <span>
+                    05
+                </span>
+
+                <p>
+                    Review
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             FORM
+        ========================================== -->
+
+        <form
+            id="projectForm"
+            class="project-form"
+        >
+
+
+            <!-- =====================================
+                 STEP 1
+            ====================================== -->
+
+            <section
+                class="form-step active"
+                data-step="1"
+            >
+
+                <div class="form-step-heading">
+
+                    <span>
+                        STEP 01
+                    </span>
+
+                    <h2>
+                        What are we building?
+                    </h2>
+
+                    <p>
+                        Choose the service that best matches
+                        your project.
+                    </p>
+
+                </div>
+
+
+                <div class="project-type-grid">
+
+
+                    <label class="project-type-card">
+
+                        <input
+                            type="radio"
+                            name="projectType"
+                            value="Website"
+                            required
+                        >
+
+                        <span class="project-type-number">
+                            01
+                        </span>
+
+                        <strong>
+                            Website
+                        </strong>
+
+                        <p>
+                            Business sites, portfolios,
+                            communities and custom web experiences.
+                        </p>
+
+                    </label>
+
+
+                    <label class="project-type-card">
+
+                        <input
+                            type="radio"
+                            name="projectType"
+                            value="Game"
+                        >
+
+                        <span class="project-type-number">
+                            02
+                        </span>
+
+                        <strong>
+                            Game
+                        </strong>
+
+                        <p>
+                            Game systems, Roblox development
+                            and interactive experiences.
+                        </p>
+
+                    </label>
+
+
+                    <label class="project-type-card">
+
+                        <input
+                            type="radio"
+                            name="projectType"
+                            value="Software"
+                        >
+
+                        <span class="project-type-number">
+                            03
+                        </span>
+
+                        <strong>
+                            Software
+                        </strong>
+
+                        <p>
+                            Applications, utilities,
+                            automation and custom tools.
+                        </p>
+
+                    </label>
+
+
+                    <label class="project-type-card">
+
+                        <input
+                            type="radio"
+                            name="projectType"
+                            value="Other"
+                        >
+
+                        <span class="project-type-number">
+                            04
+                        </span>
+
+                        <strong>
+                            Other
+                        </strong>
+
+                        <p>
+                            Something different?
+                            Tell us about it.
+                        </p>
+
+                    </label>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <span></span>
+
+                    <button
+                        type="button"
+                        class="button primary-button next-step"
+                    >
+                        Continue →
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 STEP 2
+            ====================================== -->
+
+            <section
+                class="form-step"
+                data-step="2"
+            >
+
+                <div class="form-step-heading">
+
+                    <span>
+                        STEP 02
+                    </span>
+
+                    <h2>
+                        Tell us about the project.
+                    </h2>
+
+                    <p>
+                        The more information you provide,
+                        the easier it is for us to understand
+                        what you're looking for.
+                    </p>
+
+                </div>
+
+
+                <div class="form-fields">
+
+
+                    <div class="form-group">
+
+                        <label for="projectName">
+                            Project name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="projectName"
+                            name="projectName"
+                            placeholder="e.g. Nova Clothing"
+                            maxlength="80"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="projectDescription">
+                            Project description
+                        </label>
+
+                        <textarea
+                            id="projectDescription"
+                            name="projectDescription"
+                            placeholder="Tell us what you'd like us to build..."
+                            maxlength="1500"
+                            required
+                        ></textarea>
+
+                        <small>
+                            Include the purpose of the project,
+                            who it's for and what you'd like it to do.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="projectFeatures">
+                            Features or requirements
+                        </label>
+
+                        <textarea
+                            id="projectFeatures"
+                            name="projectFeatures"
+                            placeholder="Login system, gallery, booking page, custom UI..."
+                            maxlength="1200"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="references">
+
+                            References
+
+                            <span>
+                                Optional
+                            </span>
+
+                        </label>
+
+                        <textarea
+                            id="references"
+                            name="references"
+                            placeholder="Links or examples of designs you like..."
+                            maxlength="800"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="button secondary-button previous-step"
+                    >
+                        ← Back
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button primary-button next-step"
+                    >
+                        Continue →
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 STEP 3
+            ====================================== -->
+
+            <section
+                class="form-step"
+                data-step="3"
+            >
+
+                <div class="form-step-heading">
+
+                    <span>
+                        STEP 03
+                    </span>
+
+                    <h2>
+                        Budget & timescale.
+                    </h2>
+
+                    <p>
+                        These don't need to be exact.
+                        They simply help us understand the scope.
+                    </p>
+
+                </div>
+
+
+                <div class="form-fields">
+
+
+                    <div class="form-group">
+
+                        <label for="budget">
+                            Approximate budget
+                        </label>
+
+                        <select
+                            id="budget"
+                            name="budget"
+                            required
+                        >
+
+                            <option value="">
+                                Select a budget
+                            </option>
+
+                            <option value="Under £100">
+                                Under £100
+                            </option>
+
+                            <option value="£100 - £250">
+                                £100 – £250
+                            </option>
+
+                            <option value="£250 - £500">
+                                £250 – £500
+                            </option>
+
+                            <option value="£500 - £1,000">
+                                £500 – £1,000
+                            </option>
+
+                            <option value="£1,000+">
+                                £1,000+
+                            </option>
+
+                            <option value="Not sure">
+                                Not sure yet
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="deadline">
+                            Desired completion
+                        </label>
+
+                        <select
+                            id="deadline"
+                            name="deadline"
+                            required
+                        >
+
+                            <option value="">
+                                Select a timescale
+                            </option>
+
+                            <option value="As soon as possible">
+                                As soon as possible
+                            </option>
+
+                            <option value="1 - 2 weeks">
+                                1 – 2 weeks
+                            </option>
+
+                            <option value="2 - 4 weeks">
+                                2 – 4 weeks
+                            </option>
+
+                            <option value="1 - 2 months">
+                                1 – 2 months
+                            </option>
+
+                            <option value="Flexible">
+                                Flexible
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-note">
+
+                    <span>
+                        NOTE
+                    </span>
+
+                    <p>
+                        The budget and timescale selected here do not
+                        represent a final quote or guaranteed completion
+                        date. Lucent Labs will review your requirements
+                        before confirming project pricing and availability.
+                    </p>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="button secondary-button previous-step"
+                    >
+                        ← Back
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button primary-button next-step"
+                    >
+                        Continue →
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 STEP 4
+            ====================================== -->
+
+            <section
+                class="form-step"
+                data-step="4"
+            >
+
+                <div class="form-step-heading">
+
+                    <span>
+                        STEP 04
+                    </span>
+
+                    <h2>
+                        How can we contact you?
+                    </h2>
+
+                    <p>
+                        We'll use these details to discuss
+                        your enquiry and next steps.
+                    </p>
+
+                </div>
+
+
+                <div class="form-fields">
+
+
+                    <div class="form-group">
+
+                        <label for="clientName">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="clientName"
+                            name="clientName"
+                            placeholder="Your name"
+                            maxlength="80"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            maxlength="150"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="discord">
+
+                            Discord username
+
+                            <span>
+                                Optional
+                            </span>
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="discord"
+                            name="discord"
+                            placeholder="@username"
+                            maxlength="80"
+                        >
+
+                    </div>
+
+
+                    <label class="form-checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="contactConsent"
+                            required
+                        >
+
+                        <span>
+                            I agree that Lucent Labs may use the
+                            details above to respond to this project
+                            enquiry.
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="button secondary-button previous-step"
+                    >
+                        ← Back
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button primary-button next-step"
+                    >
+                        Review Project →
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 STEP 5
+            ====================================== -->
+
+            <section
+                class="form-step"
+                data-step="5"
+            >
+
+                <div class="form-step-heading">
+
+                    <span>
+                        STEP 05
+                    </span>
+
+                    <h2>
+                        Review your enquiry.
+                    </h2>
+
+                    <p>
+                        Check everything below before submitting
+                        your project to Lucent Labs.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="project-review"
+                    id="projectReview"
+                ></div>
+
+
+                <div
+                    class="form-error"
+                    id="formError"
+                    role="alert"
+                ></div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="button secondary-button previous-step"
+                    >
+                        ← Back
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="button primary-button"
+                        id="submitProject"
+                    >
+                        Submit Project
+                    </button>
+
+                </div>
+
+            </section>
+
+        </form>
+
+
+        <!-- =========================================
+             SUCCESS SCREEN
+        ========================================== -->
+
+        <section
+            class="project-success"
+            id="projectSuccess"
+        >
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <p class="section-label">
+                PROJECT RECEIVED
+            </p>
+
+            <h2>
+                Your enquiry has been submitted.
+            </h2>
+
+            <p>
+                Thanks for contacting Lucent Labs.
+                We'll review your project and contact you
+                using the details you provided.
+            </p>
+
+
+            <div class="project-reference">
+
+                <span>
+                    PROJECT REFERENCE
+                </span>
+
+                <strong id="projectReference">
+                    LL-000000
+                </strong>
+
+            </div>
+
+
+            <a
+                href="index.html"
+                class="button primary-button"
+            >
+                Return Home
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- =============================================
+         FOOTER
+    ============================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 LUCENT LABS. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
