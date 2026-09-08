@@ -80,8 +80,31 @@ async function loadDashboard() {
         quoteCount.textContent =
             data.counts?.quotes ?? 0;
 
-        projectCount.textContent =
-            data.counts?.projects ?? 0;
+       const projectResponse = await fetch(
+    "/api/admin/projects",
+    {
+        method: "GET",
+        headers: {
+            "Accept": "application/json"
+        },
+        cache: "no-store"
+    }
+);
+
+if (!projectResponse.ok) {
+    throw new Error(
+        `Project request failed: ${projectResponse.status}`
+    );
+}
+
+const projectData = await projectResponse.json();
+
+const projects = projectData.projects || [];
+
+projectCount.textContent =
+    projects.filter(project =>
+        project.status !== "completed"
+    ).length;
 
 
         // =========================================
