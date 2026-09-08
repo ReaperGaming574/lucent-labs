@@ -163,13 +163,6 @@ function formatPaymentStatus(status) {
 
 }
 
-sendPaymentButton.disabled = true; 
-if (
-    project.payment_status === "unpaid" ||
-    project.payment_status === "payment_pending"
-) {
-    sendPaymentButton.disabled = false;
-}
 
 
 function formatPaymentMethod(method) {
@@ -325,6 +318,15 @@ setText(
         project.payment_method
     )
 );
+
+sendPaymentButton.disabled = true;
+
+if (
+    project.payment_status === "unpaid" ||
+    project.payment_status === "payment_pending"
+) {
+    sendPaymentButton.disabled = false;
+}
 
 }
 
