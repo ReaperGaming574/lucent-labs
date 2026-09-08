@@ -30,6 +30,11 @@ const message =
         "projectMessage"
     );
 
+    const sendPaymentButton =
+    document.getElementById(
+        "sendPaymentButton"
+    );
+
 
 function setText(
     id,
@@ -156,6 +161,14 @@ function formatPaymentStatus(status) {
         "UNPAID"
     );
 
+}
+
+sendPaymentButton.disabled = true; 
+if (
+    project.payment_status === "unpaid" ||
+    project.payment_status === "payment_pending"
+) {
+    sendPaymentButton.disabled = false;
 }
 
 
@@ -477,5 +490,68 @@ document
         }
     );
 
+// =========================================
+// CREATE PAYMENT REQUEST
+// =========================================
+
+sendPaymentButton.addEventListener(
+    "click",
+    async () => {
+        sendPaymentButton.disabled = true;
+        sendPaymentButton.textContent =
+            "Creating Payment...";
+
+        try {
+            const response = await fetch(
+                "/api/admin/create-payment",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        reference: reference
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+                throw new Error(
+                    data.error ||
+                    "Unable to create payment."
+                );
+            }
+
+            window.open(
+                data.checkoutUrl,
+                "_blank"
+            );
+
+            sendPaymentButton.textContent =
+                "Payment Link Created";
+        } catch (error) {
+            console.error(
+                "Payment error:",
+                error
+            );
+
+            message.hidden = false;
+            message.textContent =
+                error.message;
+
+            sendPaymentButton.disabled = false;
+            sendPaymentButton.textContent =
+                "Send Payment Request";
+        }
+    }
+);
 
 loadProject();
