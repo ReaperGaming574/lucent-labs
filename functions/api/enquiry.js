@@ -3,11 +3,14 @@ export async function onRequestPost(context) {
     try {
 
         // =========================================
-        // GET DISCORD WEBHOOK FROM CLOUDFLARE
+        // GET CLOUDFLARE SECRETS
         // =========================================
 
         const webhookURL =
             context.env.DISCORD_ENQUIRY_WEBHOOK;
+
+        const turnstileSecret =
+            context.env.TURNSTILE_SECRET_KEY;
 
 
         if (!webhookURL) {
@@ -15,7 +18,25 @@ export async function onRequestPost(context) {
             return new Response(
                 JSON.stringify({
                     success: false,
-                    error: "Webhook not configured."
+                    error: "Discord webhook is not configured."
+                }),
+                {
+                    status: 500,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+        }
+
+
+        if (!turnstileSecret) {
+
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    error: "Turnstile is not configured."
                 }),
                 {
                     status: 500,
@@ -47,12 +68,109 @@ export async function onRequestPost(context) {
             deadline,
             clientName,
             email,
-            discord
+            discord,
+            turnstileToken
         } = data;
 
 
         // =========================================
-        // BASIC VALIDATION
+        // CHECK TURNSTILE TOKEN EXISTS
+        // =========================================
+
+        if (!turnstileToken) {
+
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    error: "Security verification is required."
+                }),
+                {
+                    status: 400,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+        }
+
+
+        // =========================================
+        // VERIFY TURNSTILE WITH CLOUDFLARE
+        // =========================================
+
+        const verifyForm =
+            new FormData();
+
+
+        verifyForm.append(
+            "secret",
+            turnstileSecret
+        );
+
+
+        verifyForm.append(
+            "response",
+            turnstileToken
+        );
+
+
+        const clientIP =
+            context.request.headers.get(
+                "CF-Connecting-IP"
+            );
+
+
+        if (clientIP) {
+
+            verifyForm.append(
+                "remoteip",
+                clientIP
+            );
+
+        }
+
+
+        const turnstileResponse =
+            await fetch(
+                "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+                {
+                    method: "POST",
+                    body: verifyForm
+                }
+            );
+
+
+        const turnstileResult =
+            await turnstileResponse.json();
+
+
+        if (!turnstileResult.success) {
+
+            console.warn(
+                "Turnstile verification failed:",
+                turnstileResult
+            );
+
+
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    error: "Security verification failed."
+                }),
+                {
+                    status: 403,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+        }
+
+
+        // =========================================
+        // BASIC FORM VALIDATION
         // =========================================
 
         if (
@@ -83,66 +201,113 @@ export async function onRequestPost(context) {
 
         // =========================================
         // CLEAN / LIMIT VALUES
-        // Discord embed fields max out at 1024 chars
         // =========================================
 
         const safeReference =
-            String(reference || "No reference")
-                .slice(0, 100);
+            String(
+                reference ||
+                "No reference"
+            ).slice(
+                0,
+                100
+            );
 
 
         const safeProjectType =
-            String(projectType)
-                .slice(0, 100);
+            String(
+                projectType
+            ).slice(
+                0,
+                100
+            );
 
 
         const safeProjectName =
-            String(projectName)
-                .slice(0, 200);
+            String(
+                projectName
+            ).slice(
+                0,
+                200
+            );
 
 
         const safeDescription =
-            String(projectDescription)
-                .slice(0, 1000);
+            String(
+                projectDescription
+            ).slice(
+                0,
+                1000
+            );
 
 
         const safeFeatures =
-            String(projectFeatures || "Not provided")
-                .slice(0, 1000);
+            String(
+                projectFeatures ||
+                "Not provided"
+            ).slice(
+                0,
+                1000
+            );
 
 
         const safeReferences =
-            String(references || "Not provided")
-                .slice(0, 700);
+            String(
+                references ||
+                "Not provided"
+            ).slice(
+                0,
+                700
+            );
 
 
         const safeBudget =
-            String(budget)
-                .slice(0, 100);
+            String(
+                budget
+            ).slice(
+                0,
+                100
+            );
 
 
         const safeDeadline =
-            String(deadline)
-                .slice(0, 100);
+            String(
+                deadline
+            ).slice(
+                0,
+                100
+            );
 
 
         const safeClientName =
-            String(clientName)
-                .slice(0, 100);
+            String(
+                clientName
+            ).slice(
+                0,
+                100
+            );
 
 
         const safeEmail =
-            String(email)
-                .slice(0, 200);
+            String(
+                email
+            ).slice(
+                0,
+                200
+            );
 
 
         const safeDiscord =
-            String(discord || "Not provided")
-                .slice(0, 100);
+            String(
+                discord ||
+                "Not provided"
+            ).slice(
+                0,
+                100
+            );
 
 
         // =========================================
-        // DISCORD MESSAGE
+        // BUILD DISCORD MESSAGE
         // =========================================
 
         const discordPayload = {
@@ -167,63 +332,113 @@ export async function onRequestPost(context) {
                     fields: [
 
                         {
-                            name: "Project Type",
-                            value: safeProjectType,
-                            inline: true
+                            name:
+                                "Project Type",
+
+                            value:
+                                safeProjectType,
+
+                            inline:
+                                true
                         },
 
                         {
-                            name: "Project Name",
-                            value: safeProjectName,
-                            inline: true
+                            name:
+                                "Project Name",
+
+                            value:
+                                safeProjectName,
+
+                            inline:
+                                true
                         },
 
                         {
-                            name: "Budget",
-                            value: safeBudget,
-                            inline: true
+                            name:
+                                "Budget",
+
+                            value:
+                                safeBudget,
+
+                            inline:
+                                true
                         },
 
                         {
-                            name: "Timescale",
-                            value: safeDeadline,
-                            inline: true
+                            name:
+                                "Timescale",
+
+                            value:
+                                safeDeadline,
+
+                            inline:
+                                true
                         },
 
                         {
-                            name: "Client",
-                            value: safeClientName,
-                            inline: true
+                            name:
+                                "Client",
+
+                            value:
+                                safeClientName,
+
+                            inline:
+                                true
                         },
 
                         {
-                            name: "Email",
-                            value: safeEmail,
-                            inline: true
+                            name:
+                                "Email",
+
+                            value:
+                                safeEmail,
+
+                            inline:
+                                true
                         },
 
                         {
-                            name: "Discord",
-                            value: safeDiscord,
-                            inline: true
+                            name:
+                                "Discord",
+
+                            value:
+                                safeDiscord,
+
+                            inline:
+                                true
                         },
 
                         {
-                            name: "Project Description",
-                            value: safeDescription,
-                            inline: false
+                            name:
+                                "Project Description",
+
+                            value:
+                                safeDescription,
+
+                            inline:
+                                false
                         },
 
                         {
-                            name: "Features / Requirements",
-                            value: safeFeatures,
-                            inline: false
+                            name:
+                                "Features / Requirements",
+
+                            value:
+                                safeFeatures,
+
+                            inline:
+                                false
                         },
 
                         {
-                            name: "References",
-                            value: safeReferences,
-                            inline: false
+                            name:
+                                "References",
+
+                            value:
+                                safeReferences,
+
+                            inline:
+                                false
                         }
 
                     ],
@@ -234,7 +449,8 @@ export async function onRequestPost(context) {
                     },
 
                     timestamp:
-                        new Date().toISOString()
+                        new Date()
+                            .toISOString()
 
                 }
 
@@ -251,7 +467,8 @@ export async function onRequestPost(context) {
             await fetch(
                 webhookURL,
                 {
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
                         "Content-Type":

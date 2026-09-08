@@ -890,63 +890,82 @@ if (projectForm) {
                 generateReference();
 
 
-            const enquiry = {
+            const turnstileToken =
+    document.querySelector(
+        '[name="cf-turnstile-response"]'
+    )?.value;
 
-                reference:
-                    reference,
 
-                projectType:
-                    getValue(
-                        "projectType"
-                    ),
+if (!turnstileToken) {
 
-                projectName:
-                    getValue(
-                        "projectName"
-                    ),
+    showFormError(
+        "Please complete the security check before submitting."
+    );
 
-                projectDescription:
-                    getValue(
-                        "projectDescription"
-                    ),
+    return;
 
-                projectFeatures:
-                    getValue(
-                        "projectFeatures"
-                    ),
+}
 
-                references:
-                    getValue(
-                        "references"
-                    ),
 
-                budget:
-                    getValue(
-                        "budget"
-                    ),
+const enquiry = {
 
-                deadline:
-                    getValue(
-                        "deadline"
-                    ),
+    reference:
+        reference,
 
-                clientName:
-                    getValue(
-                        "clientName"
-                    ),
+    projectType:
+        getValue(
+            "projectType"
+        ),
 
-                email:
-                    getValue(
-                        "email"
-                    ),
+    projectName:
+        getValue(
+            "projectName"
+        ),
 
-                discord:
-                    getValue(
-                        "discord"
-                    )
+    projectDescription:
+        getValue(
+            "projectDescription"
+        ),
 
-            };
+    projectFeatures:
+        getValue(
+            "projectFeatures"
+        ),
 
+    references:
+        getValue(
+            "references"
+        ),
+
+    budget:
+        getValue(
+            "budget"
+        ),
+
+    deadline:
+        getValue(
+            "deadline"
+        ),
+
+    clientName:
+        getValue(
+            "clientName"
+        ),
+
+    email:
+        getValue(
+            "email"
+        ),
+
+    discord:
+        getValue(
+            "discord"
+        ),
+
+    turnstileToken:
+        turnstileToken
+
+};
 
             try {
 
