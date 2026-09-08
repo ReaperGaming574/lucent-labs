@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Lucent Admin</title>
+    <title>Quotes | Lucent Admin</title>
 
     <link
         rel="stylesheet"
@@ -45,15 +45,15 @@
             <nav class="admin-nav">
 
                 <a
-                    href="#"
-                    class="admin-nav-link active"
+                    href="/admin/"
+                    class="admin-nav-link"
                 >
                     <span>01</span>
                     Dashboard
                 </a>
 
                 <a
-                    href="#"
+                    href="/admin/"
                     class="admin-nav-link"
                 >
                     <span>02</span>
@@ -62,7 +62,7 @@
 
                 <a
                     href="/admin/quotes.html"
-                    class="admin-nav-link"
+                    class="admin-nav-link active"
                 >
                     <span>03</span>
                     Quotes
@@ -91,29 +91,32 @@
 
 
         <!-- ========================================
-             MAIN CONTENT
+             MAIN
         ========================================= -->
 
         <main class="admin-main">
 
-            <header class="admin-header">
+            <header class="quotes-header">
 
                 <div>
 
-                    <p class="admin-eyebrow">
+                    <p class="section-number">
                         LUCENT LABS
                     </p>
 
                     <h1>
-                        Dashboard
+                        Quotes
                     </h1>
+
+                    <p class="quotes-subtitle">
+                        Manage project quotations.
+                    </p>
 
                 </div>
 
+                <div class="admin-system-status">
 
-                <div class="admin-status">
-
-                    <span class="status-dot"></span>
+                    <span></span>
 
                     System Online
 
@@ -137,7 +140,7 @@
                         </p>
 
                         <h2>
-                            Project Overview
+                            Quote Overview
                         </h2>
 
                     </div>
@@ -145,51 +148,55 @@
                 </div>
 
 
-                <div class="stat-grid">
+                <div class="quote-stats">
 
-                    <article class="stat-card">
+                    <article class="quote-stat-card">
 
-                        <span class="stat-label">
-                            New Enquiries
+                        <span>
+                            TOTAL QUOTES
                         </span>
 
-                        <strong
-                            class="stat-value"
-                            id="enquiryCount"
-                        >
-                            —
+                        <strong id="totalQuotes">
+                            0
                         </strong>
 
                     </article>
 
 
-                    <article class="stat-card">
+                    <article class="quote-stat-card">
 
-                        <span class="stat-label">
-                            Active Quotes
+                        <span>
+                            DRAFTS
                         </span>
 
-                        <strong
-                            class="stat-value"
-                            id="quoteCount"
-                        >
-                            —
+                        <strong id="draftQuotes">
+                            0
                         </strong>
 
                     </article>
 
 
-                    <article class="stat-card">
+                    <article class="quote-stat-card">
 
-                        <span class="stat-label">
-                            Active Projects
+                        <span>
+                            SENT
                         </span>
 
-                        <strong
-                            class="stat-value"
-                            id="projectCount"
-                        >
-                            —
+                        <strong id="sentQuotes">
+                            0
+                        </strong>
+
+                    </article>
+
+
+                    <article class="quote-stat-card">
+
+                        <span>
+                            ACCEPTED
+                        </span>
+
+                        <strong id="acceptedQuotes">
+                            0
                         </strong>
 
                     </article>
@@ -200,22 +207,34 @@
 
 
             <!-- ========================================
-                 RECENT ENQUIRIES
+                 QUOTES
             ========================================= -->
 
             <section class="admin-section">
 
-                <div class="section-heading">
+                <div class="section-heading quotes-list-heading">
 
                     <div>
 
                         <p class="section-number">
-                            02 / ENQUIRIES
+                            02 / QUOTES
                         </p>
 
                         <h2>
-                            Recent Enquiries
+                            All Quotes
                         </h2>
+
+                    </div>
+
+
+                    <div class="quote-search">
+
+                        <input
+                            type="search"
+                            id="quoteSearch"
+                            placeholder="Search quotes..."
+                            autocomplete="off"
+                        >
 
                     </div>
 
@@ -223,19 +242,45 @@
 
 
                 <div
-                    class="enquiry-list"
-                    id="enquiryList"
+                    class="quotes-loading"
+                    id="quotesLoading"
+                >
+                    Loading quotes...
+                </div>
+
+
+                <div
+                    class="quotes-error"
+                    id="quotesError"
+                    hidden
+                >
+                    Unable to load quotes.
+                </div>
+
+
+                <div
+                    class="quotes-empty"
+                    id="quotesEmpty"
+                    hidden
                 >
 
-                    <div class="admin-loading">
+                    <p>
+                        No quotes yet.
+                    </p>
 
-                        <span class="loading-dot"></span>
-
-                        Loading enquiries...
-
-                    </div>
+                    <span>
+                        Quotes created from enquiries
+                        will appear here.
+                    </span>
 
                 </div>
+
+
+                <div
+                    class="quotes-list"
+                    id="quotesList"
+                    hidden
+                ></div>
 
             </section>
 
@@ -244,7 +289,7 @@
     </div>
 
 
-    <script src="admin.js"></script>
+    <script src="quotes.js"></script>
 
 </body>
 

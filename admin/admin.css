@@ -1175,3 +1175,410 @@ body {
     }
 
 }
+
+/* ========================================
+   QUOTES PAGE
+======================================== */
+
+.quotes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 30px;
+
+    margin-bottom: 80px;
+}
+
+.quotes-header h1 {
+    margin-top: 8px;
+
+    font-size:
+        clamp(48px, 7vw, 78px);
+
+    font-weight: 500;
+
+    letter-spacing: -0.05em;
+}
+
+.quotes-subtitle {
+    margin-top: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.4);
+
+    font-size: 12px;
+}
+
+.quote-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.quote-stat-card {
+    min-height: 145px;
+
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.quote-stat-card span {
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+}
+
+.quote-stat-card strong {
+    font-size: 34px;
+
+    font-weight: 400;
+}
+
+
+/* ========================================
+   QUOTE SEARCH
+======================================== */
+
+.quotes-list-heading {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.quote-search {
+    width: min(280px, 100%);
+}
+
+.quote-search input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    outline: none;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color: #ffffff;
+
+    font: inherit;
+
+    font-size: 11px;
+}
+
+.quote-search input:focus {
+    border-color:
+        rgba(255, 255, 255, 0.2);
+}
+
+
+/* ========================================
+   QUOTE CARDS
+======================================== */
+
+.quotes-list {
+    display: grid;
+
+    gap: 14px;
+}
+
+.admin-quote-card {
+    padding: 25px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.admin-quote-top {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding-bottom: 22px;
+}
+
+.admin-quote-reference {
+    margin-bottom: 8px;
+
+    color:
+        rgba(255, 255, 255, 0.32);
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+}
+
+.admin-quote-top h3 {
+    margin-bottom: 7px;
+
+    font-size: 18px;
+
+    font-weight: 500;
+}
+
+.admin-quote-client {
+    color:
+        rgba(255, 255, 255, 0.4);
+
+    font-size: 11px;
+}
+
+
+/* ========================================
+   QUOTE STATUS
+======================================== */
+
+.admin-quote-status {
+    padding: 7px 10px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 100px;
+
+    color:
+        rgba(255, 255, 255, 0.55);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+}
+
+.status-accepted {
+    border-color:
+        rgba(110, 255, 160, 0.2);
+
+    color:
+        rgba(150, 255, 185, 0.85);
+
+    background:
+        rgba(70, 220, 120, 0.06);
+}
+
+.status-declined {
+    border-color:
+        rgba(255, 110, 110, 0.2);
+
+    color:
+        rgba(255, 150, 150, 0.85);
+
+    background:
+        rgba(220, 70, 70, 0.06);
+}
+
+
+/* ========================================
+   QUOTE DETAILS
+======================================== */
+
+.admin-quote-details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    padding:
+        22px 0;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.05);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-quote-details div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.admin-quote-details span {
+    color:
+        rgba(255, 255, 255, 0.28);
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+}
+
+.admin-quote-details strong {
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+
+/* ========================================
+   QUOTE FOOTER
+======================================== */
+
+.admin-quote-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding-top: 20px;
+}
+
+.admin-quote-footer span {
+    color:
+        rgba(255, 255, 255, 0.28);
+
+    font-size: 9px;
+}
+
+.admin-quote-footer a {
+    color: #ffffff;
+
+    font-size: 10px;
+
+    text-decoration: none;
+}
+
+
+/* ========================================
+   QUOTES STATES
+======================================== */
+
+.quotes-loading,
+.quotes-error,
+.quotes-empty {
+    padding: 50px 25px;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.06);
+
+    border-radius: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size: 11px;
+}
+
+.quotes-empty p {
+    margin-bottom: 7px;
+
+    color:
+        rgba(255, 255, 255, 0.65);
+
+    font-size: 14px;
+}
+
+.quotes-empty span {
+    color:
+        rgba(255, 255, 255, 0.3);
+
+    font-size: 10px;
+}
+
+
+/* ========================================
+   QUOTES MOBILE
+======================================== */
+
+@media (max-width: 900px) {
+
+    .quote-stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .admin-quote-details {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .quotes-header {
+        flex-direction: column;
+
+        margin-bottom: 55px;
+    }
+
+    .quotes-list-heading {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .quote-search {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .quote-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-quote-details {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+}
