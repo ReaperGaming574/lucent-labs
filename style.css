@@ -2684,3 +2684,24 @@ footer {
     }
 
 }
+
+/* ========================================
+   STAFF LOGIN
+======================================== */
+
+.staff-login-link {
+    display: inline-block;
+    margin-top: 10px;
+
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.staff-login-link:hover {
+    color: rgba(255, 255, 255, 0.9);
+}

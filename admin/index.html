@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Lucent Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- ========================================
+             SIDEBAR
+        ========================================= -->
+
+        <aside class="admin-sidebar">
+
+            <div class="admin-brand">
+
+                <a href="/">
+                    LUCENT LABS
+                </a>
+
+                <span>
+                    ADMIN
+                </span>
+
+            </div>
+
+
+            <nav class="admin-nav">
+
+                <a
+                    href="#"
+                    class="admin-nav-link active"
+                >
+                    <span>01</span>
+                    Dashboard
+                </a>
+
+                <a
+                    href="#"
+                    class="admin-nav-link"
+                >
+                    <span>02</span>
+                    Enquiries
+                </a>
+
+                <a
+                    href="#"
+                    class="admin-nav-link"
+                >
+                    <span>03</span>
+                    Quotes
+                </a>
+
+                <a
+                    href="#"
+                    class="admin-nav-link"
+                >
+                    <span>04</span>
+                    Projects
+                </a>
+
+            </nav>
+
+
+            <div class="admin-sidebar-footer">
+
+                <a href="/">
+                    ← Return to Website
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ========================================
+             MAIN CONTENT
+        ========================================= -->
+
+        <main class="admin-main">
+
+            <header class="admin-header">
+
+                <div>
+
+                    <p class="admin-eyebrow">
+                        LUCENT LABS
+                    </p>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                </div>
+
+
+                <div class="admin-status">
+
+                    <span class="status-dot"></span>
+
+                    System Online
+
+                </div>
+
+            </header>
+
+
+            <!-- ========================================
+                 OVERVIEW
+            ========================================= -->
+
+            <section class="admin-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <p class="section-number">
+                            01 / OVERVIEW
+                        </p>
+
+                        <h2>
+                            Project Overview
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-grid">
+
+                    <article class="stat-card">
+
+                        <span class="stat-label">
+                            New Enquiries
+                        </span>
+
+                        <strong
+                            class="stat-value"
+                            id="enquiryCount"
+                        >
+                            —
+                        </strong>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-label">
+                            Active Quotes
+                        </span>
+
+                        <strong
+                            class="stat-value"
+                            id="quoteCount"
+                        >
+                            —
+                        </strong>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-label">
+                            Active Projects
+                        </span>
+
+                        <strong
+                            class="stat-value"
+                            id="projectCount"
+                        >
+                            —
+                        </strong>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- ========================================
+                 RECENT ENQUIRIES
+            ========================================= -->
+
+            <section class="admin-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <p class="section-number">
+                            02 / ENQUIRIES
+                        </p>
+
+                        <h2>
+                            Recent Enquiries
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="enquiry-list"
+                    id="enquiryList"
+                >
+
+                    <div class="admin-loading">
+
+                        <span class="loading-dot"></span>
+
+                        Loading enquiries...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="admin.js"></script>
+
+</body>
+
+</html>

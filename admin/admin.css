@@ -1,0 +1,739 @@
+/* ========================================
+   LUCENT LABS ADMIN
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 70% 10%,
+            rgba(80, 80, 95, 0.1),
+            transparent 35%
+        ),
+        #050506;
+
+    color: #f4f4f5;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* ========================================
+   ADMIN LAYOUT
+======================================== */
+
+.admin-layout {
+    display: grid;
+
+    grid-template-columns:
+        260px 1fr;
+
+    min-height: 100vh;
+}
+
+
+/* ========================================
+   SIDEBAR
+======================================== */
+
+.admin-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 260px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 34px 24px;
+
+    background:
+        rgba(8, 8, 10, 0.92);
+
+    border-right:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    backdrop-filter:
+        blur(20px);
+
+    z-index: 100;
+}
+
+
+/* ========================================
+   BRAND
+======================================== */
+
+.admin-brand {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-bottom: 55px;
+}
+
+.admin-brand a {
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    text-decoration: none;
+}
+
+.admin-brand span {
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size: 10px;
+
+    letter-spacing: 0.35em;
+}
+
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.admin-nav-link {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        14px 15px;
+
+    border:
+        1px solid transparent;
+
+    border-radius:
+        8px;
+
+    color:
+        rgba(255, 255, 255, 0.45);
+
+    font-size: 13px;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.admin-nav-link span {
+    color:
+        rgba(255, 255, 255, 0.22);
+
+    font-size: 9px;
+
+    letter-spacing: 0.15em;
+}
+
+.admin-nav-link:hover {
+    color:
+        rgba(255, 255, 255, 0.9);
+
+    background:
+        rgba(255, 255, 255, 0.03);
+}
+
+.admin-nav-link.active {
+    color: #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    border-color:
+        rgba(255, 255, 255, 0.08);
+}
+
+.admin-nav-link.active::before {
+    content: "";
+
+    position: absolute;
+
+    left: -25px;
+
+    width: 2px;
+    height: 20px;
+
+    background: #ffffff;
+}
+
+
+/* ========================================
+   SIDEBAR FOOTER
+======================================== */
+
+.admin-sidebar-footer {
+    margin-top: auto;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-sidebar-footer a {
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size: 11px;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease;
+}
+
+.admin-sidebar-footer a:hover {
+    color: #ffffff;
+}
+
+
+/* ========================================
+   MAIN
+======================================== */
+
+.admin-main {
+    grid-column: 2;
+
+    width: 100%;
+
+    padding:
+        48px clamp(35px, 5vw, 80px)
+        100px;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 30px;
+
+    margin-bottom: 80px;
+}
+
+.admin-eyebrow {
+    margin-bottom: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.32);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.28em;
+}
+
+.admin-header h1 {
+    font-size:
+        clamp(38px, 5vw, 64px);
+
+    font-weight: 500;
+
+    letter-spacing: -0.04em;
+}
+
+
+/* ========================================
+   SYSTEM STATUS
+======================================== */
+
+.admin-status {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.45);
+
+    font-size: 11px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #8ee6a0;
+
+    box-shadow:
+        0 0 10px rgba(142, 230, 160, 0.5);
+}
+
+
+/* ========================================
+   SECTIONS
+======================================== */
+
+.admin-section {
+    margin-bottom: 75px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 25px;
+}
+
+.section-number {
+    margin-bottom: 9px;
+
+    color:
+        rgba(255, 255, 255, 0.25);
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2em;
+}
+
+.section-heading h2 {
+    font-size:
+        clamp(21px, 3vw, 28px);
+
+    font-weight: 500;
+
+    letter-spacing: -0.02em;
+}
+
+
+/* ========================================
+   STAT CARDS
+======================================== */
+
+.stat-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+.stat-card {
+    min-height: 170px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 24px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.stat-card:hover {
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    border-color:
+        rgba(255, 255, 255, 0.12);
+}
+
+.stat-label {
+    color:
+        rgba(255, 255, 255, 0.4);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.12em;
+}
+
+.stat-value {
+    font-size: 46px;
+
+    font-weight: 400;
+
+    letter-spacing: -0.04em;
+}
+
+
+/* ========================================
+   ENQUIRY LIST
+======================================== */
+
+.enquiry-list {
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.018);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 12px;
+}
+
+
+/* ========================================
+   ENQUIRY ITEM
+======================================== */
+
+.enquiry-item {
+    display: grid;
+
+    grid-template-columns:
+        150px 1fr 140px 120px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    min-height: 90px;
+
+    padding:
+        20px 24px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.06);
+
+    transition:
+        background 0.2s ease;
+}
+
+.enquiry-item:last-child {
+    border-bottom: none;
+}
+
+.enquiry-item:hover {
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+
+/* ========================================
+   ENQUIRY DETAILS
+======================================== */
+
+.enquiry-reference {
+    color:
+        rgba(255, 255, 255, 0.45);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+}
+
+.enquiry-project h3 {
+    margin-bottom: 6px;
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+.enquiry-project p {
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size: 11px;
+}
+
+
+/* ========================================
+   STATUS BADGES
+======================================== */
+
+.enquiry-status {
+    width: fit-content;
+
+    padding:
+        6px 9px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+
+    border-radius: 999px;
+
+    color:
+        rgba(255, 255, 255, 0.55);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.12em;
+}
+
+
+/* ========================================
+   VIEW BUTTON
+======================================== */
+
+.enquiry-view {
+    justify-self: end;
+
+    color:
+        rgba(255, 255, 255, 0.55);
+
+    font-size: 11px;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.enquiry-view:hover {
+    color: #ffffff;
+
+    transform:
+        translateX(3px);
+}
+
+
+/* ========================================
+   LOADING
+======================================== */
+
+.admin-loading {
+    min-height: 130px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size: 11px;
+}
+
+.loading-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.5);
+
+    animation:
+        loadingPulse 1.2s
+        infinite ease-in-out;
+}
+
+@keyframes loadingPulse {
+
+    0%,
+    100% {
+        opacity: 0.25;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+
+/* ========================================
+   EMPTY STATE
+======================================== */
+
+.admin-empty {
+    min-height: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color:
+        rgba(255, 255, 255, 0.3);
+
+    font-size: 12px;
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 950px) {
+
+    .admin-layout {
+        display: block;
+    }
+
+    .admin-sidebar {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+
+        padding:
+            24px 25px;
+
+        border-right: none;
+
+        border-bottom:
+            1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .admin-brand {
+        margin-bottom: 25px;
+    }
+
+    .admin-nav {
+        flex-direction: row;
+
+        overflow-x: auto;
+
+        padding-bottom: 4px;
+    }
+
+    .admin-nav-link {
+        flex-shrink: 0;
+    }
+
+    .admin-nav-link.active::before {
+        display: none;
+    }
+
+    .admin-sidebar-footer {
+        display: none;
+    }
+
+    .admin-main {
+        width: 100%;
+
+        padding:
+            40px 25px 80px;
+    }
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 650px) {
+
+    .admin-header {
+        margin-bottom: 55px;
+
+        flex-direction: column;
+    }
+
+    .admin-status {
+        margin-top: 0;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        min-height: 130px;
+    }
+
+    .enquiry-item {
+        grid-template-columns:
+            1fr auto;
+
+        gap: 12px;
+
+        padding:
+            20px;
+    }
+
+    .enquiry-reference {
+        grid-column: 1 / -1;
+    }
+
+    .enquiry-project {
+        grid-column: 1;
+    }
+
+    .enquiry-status {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .enquiry-view {
+        grid-column: 1 / -1;
+
+        justify-self: start;
+
+        margin-top: 8px;
+    }
+
+}
