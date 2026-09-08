@@ -51,7 +51,7 @@ export async function onRequestGet(context) {
                         created_at,
                         updated_at,
                         started_at,
-                        completed_at
+                        completed_at,
 
                         payment_status,
                         payment_method,
