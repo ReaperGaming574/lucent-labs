@@ -1582,3 +1582,46 @@ body {
     }
 
 }
+
+/* ========================================
+   INDIVIDUAL QUOTE
+======================================== */
+
+.quote-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 30px;
+
+    margin-bottom: 75px;
+}
+
+.quote-page-header h1 {
+    margin-bottom: 10px;
+
+    font-size:
+        clamp(38px, 5vw, 62px);
+
+    font-weight: 500;
+
+    letter-spacing: -0.04em;
+}
+
+.quote-page-client {
+    color:
+        rgba(255, 255, 255, 0.4);
+
+    font-size: 12px;
+}
+
+
+@media (max-width: 700px) {
+
+    .quote-page-header {
+        flex-direction: column;
+
+        margin-bottom: 55px;
+    }
+
+}

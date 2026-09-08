@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Quote | Lucent Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- ========================================
+             SIDEBAR
+        ========================================= -->
+
+        <aside class="admin-sidebar">
+
+            <div class="admin-brand">
+
+                <a href="/">
+                    LUCENT LABS
+                </a>
+
+                <span>
+                    ADMIN
+                </span>
+
+            </div>
+
+
+            <nav class="admin-nav">
+
+                <a
+                    href="/admin/"
+                    class="admin-nav-link"
+                >
+                    <span>01</span>
+                    Dashboard
+                </a>
+
+                <a
+                    href="/admin/"
+                    class="admin-nav-link"
+                >
+                    <span>02</span>
+                    Enquiries
+                </a>
+
+                <a
+                    href="/admin/quotes.html"
+                    class="admin-nav-link active"
+                >
+                    <span>03</span>
+                    Quotes
+                </a>
+
+                <a
+                    href="#"
+                    class="admin-nav-link"
+                >
+                    <span>04</span>
+                    Projects
+                </a>
+
+            </nav>
+
+
+            <div class="admin-sidebar-footer">
+
+                <a href="/">
+                    ← Return to Website
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ========================================
+             MAIN
+        ========================================= -->
+
+        <main class="admin-main">
+
+            <a
+                href="/admin/quotes.html"
+                class="admin-back"
+            >
+                ← Back to Quotes
+            </a>
+
+
+            <!-- ========================================
+                 LOADING
+            ========================================= -->
+
+            <div
+                class="enquiry-page-loading"
+                id="quoteLoading"
+            >
+                Loading quote...
+            </div>
+
+
+            <!-- ========================================
+                 ERROR
+            ========================================= -->
+
+            <div
+                class="enquiry-page-error"
+                id="quoteError"
+                hidden
+            >
+
+                <p>
+                    Unable to load this quote.
+                </p>
+
+                <a href="/admin/quotes.html">
+                    Return to Quotes
+                </a>
+
+            </div>
+
+
+            <!-- ========================================
+                 CONTENT
+            ========================================= -->
+
+            <div
+                id="quoteContent"
+                hidden
+            >
+
+                <header class="quote-page-header">
+
+                    <div>
+
+                        <p
+                            class="enquiry-page-reference"
+                            id="quoteReference"
+                        >
+                            —
+                        </p>
+
+                        <h1 id="quoteProjectName">
+                            —
+                        </h1>
+
+                        <p
+                            class="quote-page-client"
+                            id="quoteClient"
+                        >
+                            —
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="admin-quote-status"
+                        id="quoteStatus"
+                    >
+                        —
+                    </span>
+
+                </header>
+
+
+                <!-- ========================================
+                     OVERVIEW
+                ========================================= -->
+
+                <section class="admin-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="section-number">
+                                01 / OVERVIEW
+                            </p>
+
+                            <h2>
+                                Quote Overview
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-grid">
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Enquiry
+                            </span>
+
+                            <strong id="quoteEnquiry">
+                                —
+                            </strong>
+
+                        </article>
+
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Project Type
+                            </span>
+
+                            <strong id="quoteProjectType">
+                                —
+                            </strong>
+
+                        </article>
+
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Created
+                            </span>
+
+                            <strong id="quoteCreated">
+                                —
+                            </strong>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ========================================
+                     EDIT QUOTE
+                ========================================= -->
+
+                <section class="admin-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="section-number">
+                                02 / QUOTE
+                            </p>
+
+                            <h2>
+                                Quote Details
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        class="quote-form"
+                        id="quoteEditForm"
+                    >
+
+                        <div class="quote-form-grid">
+
+                            <div class="quote-field">
+
+                                <label for="editPrice">
+                                    Project Price
+                                </label>
+
+                                <div class="money-input">
+
+                                    <span>£</span>
+
+                                    <input
+                                        type="number"
+                                        id="editPrice"
+                                        min="0"
+                                        step="0.01"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="quote-field">
+
+                                <label for="editDeposit">
+                                    Deposit
+                                </label>
+
+                                <div class="money-input">
+
+                                    <span>£</span>
+
+                                    <input
+                                        type="number"
+                                        id="editDeposit"
+                                        min="0"
+                                        step="0.01"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="quote-field">
+
+                            <label for="editTimescale">
+                                Estimated Timescale
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editTimescale"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="quote-field">
+
+                            <label for="editScope">
+                                Scope of Work
+                            </label>
+
+                            <textarea
+                                id="editScope"
+                                rows="10"
+                                maxlength="5000"
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <div
+                            class="quote-form-message"
+                            id="quoteEditMessage"
+                            role="alert"
+                        ></div>
+
+
+                        <div class="quote-actions">
+
+                            <button
+                                type="submit"
+                                class="quote-save-button"
+                                id="saveChangesButton"
+                            >
+                                Save Changes
+                            </button>
+
+                            <button
+                                type="button"
+                                class="quote-send-button"
+                                id="sendQuoteButton"
+                                disabled
+                            >
+                                Send Quote
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="quote.js"></script>
+
+</body>
+
+</html>
