@@ -574,7 +574,6 @@ async function verifyStripeSignature(
     }
 }
 
-
 function bufferToHex(buffer) {
     return Array
         .from(
