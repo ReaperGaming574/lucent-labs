@@ -3,7 +3,7 @@ export async function onRequestPost(context) {
     try {
 
         // =========================================
-        // GET CLOUDFLARE SECRETS
+        // CLOUDFLARE ENVIRONMENT
         // =========================================
 
         const webhookURL =
@@ -12,20 +12,18 @@ export async function onRequestPost(context) {
         const turnstileSecret =
             context.env.TURNSTILE_SECRET_KEY;
 
+        const database =
+            context.env.DB;
+
 
         if (!webhookURL) {
 
-            return new Response(
-                JSON.stringify({
+            return jsonResponse(
+                {
                     success: false,
                     error: "Discord webhook is not configured."
-                }),
-                {
-                    status: 500,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+                },
+                500
             );
 
         }
@@ -33,24 +31,32 @@ export async function onRequestPost(context) {
 
         if (!turnstileSecret) {
 
-            return new Response(
-                JSON.stringify({
+            return jsonResponse(
+                {
                     success: false,
                     error: "Turnstile is not configured."
-                }),
+                },
+                500
+            );
+
+        }
+
+
+        if (!database) {
+
+            return jsonResponse(
                 {
-                    status: 500,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+                    success: false,
+                    error: "Database is not configured."
+                },
+                500
             );
 
         }
 
 
         // =========================================
-        // READ FORM DATA
+        // READ REQUEST
         // =========================================
 
         const data =
@@ -74,29 +80,24 @@ export async function onRequestPost(context) {
 
 
         // =========================================
-        // CHECK TURNSTILE TOKEN EXISTS
+        // TURNSTILE TOKEN CHECK
         // =========================================
 
         if (!turnstileToken) {
 
-            return new Response(
-                JSON.stringify({
+            return jsonResponse(
+                {
                     success: false,
                     error: "Security verification is required."
-                }),
-                {
-                    status: 400,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+                },
+                400
             );
 
         }
 
 
         // =========================================
-        // VERIFY TURNSTILE WITH CLOUDFLARE
+        // VERIFY TURNSTILE
         // =========================================
 
         const verifyForm =
@@ -111,7 +112,7 @@ export async function onRequestPost(context) {
 
         verifyForm.append(
             "response",
-            turnstileToken
+            String(turnstileToken)
         );
 
 
@@ -141,6 +142,25 @@ export async function onRequestPost(context) {
             );
 
 
+        if (!turnstileResponse.ok) {
+
+            console.error(
+                "Turnstile request failed:",
+                turnstileResponse.status
+            );
+
+
+            return jsonResponse(
+                {
+                    success: false,
+                    error: "Security service unavailable."
+                },
+                502
+            );
+
+        }
+
+
         const turnstileResult =
             await turnstileResponse.json();
 
@@ -148,32 +168,28 @@ export async function onRequestPost(context) {
         if (!turnstileResult.success) {
 
             console.warn(
-                "Turnstile verification failed:",
-                turnstileResult
+                "Turnstile rejected submission:",
+                turnstileResult["error-codes"]
             );
 
 
-            return new Response(
-                JSON.stringify({
+            return jsonResponse(
+                {
                     success: false,
                     error: "Security verification failed."
-                }),
-                {
-                    status: 403,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+                },
+                403
             );
 
         }
 
 
         // =========================================
-        // BASIC FORM VALIDATION
+        // REQUIRED FIELD VALIDATION
         // =========================================
 
         if (
+            !reference ||
             !projectType ||
             !projectName ||
             !projectDescription ||
@@ -183,131 +199,184 @@ export async function onRequestPost(context) {
             !email
         ) {
 
-            return new Response(
-                JSON.stringify({
+            return jsonResponse(
+                {
                     success: false,
                     error: "Missing required fields."
-                }),
-                {
-                    status: 400,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+                },
+                400
             );
 
         }
 
 
         // =========================================
-        // CLEAN / LIMIT VALUES
+        // CLEAN / LIMIT DATA
         // =========================================
 
         const safeReference =
-            String(
-                reference ||
-                "No reference"
-            ).slice(
-                0,
-                100
-            );
+            String(reference)
+                .trim()
+                .slice(0, 100);
 
 
         const safeProjectType =
-            String(
-                projectType
-            ).slice(
-                0,
-                100
-            );
+            String(projectType)
+                .trim()
+                .slice(0, 100);
 
 
         const safeProjectName =
-            String(
-                projectName
-            ).slice(
-                0,
-                200
-            );
+            String(projectName)
+                .trim()
+                .slice(0, 200);
 
 
         const safeDescription =
-            String(
-                projectDescription
-            ).slice(
-                0,
-                1000
-            );
+            String(projectDescription)
+                .trim()
+                .slice(0, 1000);
 
 
         const safeFeatures =
             String(
                 projectFeatures ||
-                "Not provided"
-            ).slice(
-                0,
-                1000
-            );
+                ""
+            )
+                .trim()
+                .slice(0, 1000);
 
 
         const safeReferences =
             String(
                 references ||
-                "Not provided"
-            ).slice(
-                0,
-                700
-            );
+                ""
+            )
+                .trim()
+                .slice(0, 700);
 
 
         const safeBudget =
-            String(
-                budget
-            ).slice(
-                0,
-                100
-            );
+            String(budget)
+                .trim()
+                .slice(0, 100);
 
 
         const safeDeadline =
-            String(
-                deadline
-            ).slice(
-                0,
-                100
-            );
+            String(deadline)
+                .trim()
+                .slice(0, 100);
 
 
         const safeClientName =
-            String(
-                clientName
-            ).slice(
-                0,
-                100
-            );
+            String(clientName)
+                .trim()
+                .slice(0, 100);
 
 
         const safeEmail =
-            String(
-                email
-            ).slice(
-                0,
-                200
-            );
+            String(email)
+                .trim()
+                .slice(0, 200);
 
 
         const safeDiscord =
             String(
                 discord ||
-                "Not provided"
-            ).slice(
-                0,
-                100
-            );
+                ""
+            )
+                .trim()
+                .slice(0, 100);
 
 
         // =========================================
-        // BUILD DISCORD MESSAGE
+        // SAVE ENQUIRY TO D1
+        // =========================================
+
+        try {
+
+            await database
+                .prepare(
+                    `
+                    INSERT INTO enquiries (
+                        reference,
+                        project_type,
+                        project_name,
+                        project_description,
+                        project_features,
+                        project_references,
+                        budget,
+                        deadline,
+                        client_name,
+                        email,
+                        discord,
+                        status
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    `
+                )
+                .bind(
+                    safeReference,
+                    safeProjectType,
+                    safeProjectName,
+                    safeDescription,
+                    safeFeatures || null,
+                    safeReferences || null,
+                    safeBudget,
+                    safeDeadline,
+                    safeClientName,
+                    safeEmail,
+                    safeDiscord || null,
+                    "new"
+                )
+                .run();
+
+        } catch (databaseError) {
+
+            console.error(
+                "Database insert error:",
+                databaseError
+            );
+
+
+            const message =
+                String(
+                    databaseError?.message ||
+                    databaseError
+                );
+
+
+            if (
+                message.includes(
+                    "UNIQUE constraint failed"
+                )
+            ) {
+
+                return jsonResponse(
+                    {
+                        success: false,
+                        error:
+                            "That enquiry reference already exists. Please refresh the page and try again."
+                    },
+                    409
+                );
+
+            }
+
+
+            return jsonResponse(
+                {
+                    success: false,
+                    error: "Unable to save enquiry."
+                },
+                500
+            );
+
+        }
+
+
+        // =========================================
+        // BUILD DISCORD NOTIFICATION
         // =========================================
 
         const discordPayload = {
@@ -332,113 +401,70 @@ export async function onRequestPost(context) {
                     fields: [
 
                         {
-                            name:
-                                "Project Type",
-
-                            value:
-                                safeProjectType,
-
-                            inline:
-                                true
+                            name: "Project Type",
+                            value: safeProjectType,
+                            inline: true
                         },
 
                         {
-                            name:
-                                "Project Name",
-
-                            value:
-                                safeProjectName,
-
-                            inline:
-                                true
+                            name: "Project Name",
+                            value: safeProjectName,
+                            inline: true
                         },
 
                         {
-                            name:
-                                "Budget",
-
-                            value:
-                                safeBudget,
-
-                            inline:
-                                true
+                            name: "Budget",
+                            value: safeBudget,
+                            inline: true
                         },
 
                         {
-                            name:
-                                "Timescale",
-
-                            value:
-                                safeDeadline,
-
-                            inline:
-                                true
+                            name: "Timescale",
+                            value: safeDeadline,
+                            inline: true
                         },
 
                         {
-                            name:
-                                "Client",
-
-                            value:
-                                safeClientName,
-
-                            inline:
-                                true
+                            name: "Client",
+                            value: safeClientName,
+                            inline: true
                         },
 
                         {
-                            name:
-                                "Email",
-
-                            value:
-                                safeEmail,
-
-                            inline:
-                                true
+                            name: "Email",
+                            value: safeEmail,
+                            inline: true
                         },
 
                         {
-                            name:
-                                "Discord",
-
+                            name: "Discord",
                             value:
-                                safeDiscord,
-
-                            inline:
-                                true
+                                safeDiscord ||
+                                "Not provided",
+                            inline: true
                         },
 
                         {
-                            name:
-                                "Project Description",
-
-                            value:
-                                safeDescription,
-
-                            inline:
-                                false
+                            name: "Project Description",
+                            value: safeDescription,
+                            inline: false
                         },
 
                         {
                             name:
                                 "Features / Requirements",
-
                             value:
-                                safeFeatures,
-
-                            inline:
-                                false
+                                safeFeatures ||
+                                "Not provided",
+                            inline: false
                         },
 
                         {
-                            name:
-                                "References",
-
+                            name: "References",
                             value:
-                                safeReferences,
-
-                            inline:
-                                false
+                                safeReferences ||
+                                "Not provided",
+                            inline: false
                         }
 
                     ],
@@ -460,15 +486,14 @@ export async function onRequestPost(context) {
 
 
         // =========================================
-        // SEND TO DISCORD
+        // SEND DISCORD NOTIFICATION
         // =========================================
 
         const discordResponse =
             await fetch(
                 webhookURL,
                 {
-                    method:
-                        "POST",
+                    method: "POST",
 
                     headers: {
                         "Content-Type":
@@ -496,17 +521,25 @@ export async function onRequestPost(context) {
             );
 
 
-            return new Response(
-                JSON.stringify({
-                    success: false,
-                    error: "Discord submission failed."
-                }),
+            /*
+                IMPORTANT:
+
+                The enquiry has ALREADY been safely stored
+                in D1 at this point.
+
+                Discord is only the notification system.
+                We do not delete the enquiry just because
+                Discord failed.
+            */
+
+            return jsonResponse(
                 {
-                    status: 502,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+                    success: true,
+                    reference: safeReference,
+                    warning:
+                        "Enquiry saved, but notification delivery failed."
+                },
+                200
             );
 
         }
@@ -516,17 +549,12 @@ export async function onRequestPost(context) {
         // SUCCESS
         // =========================================
 
-        return new Response(
-            JSON.stringify({
+        return jsonResponse(
+            {
                 success: true,
                 reference: safeReference
-            }),
-            {
-                status: 200,
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
+            },
+            200
         );
 
 
@@ -538,19 +566,38 @@ export async function onRequestPost(context) {
         );
 
 
-        return new Response(
-            JSON.stringify({
+        return jsonResponse(
+            {
                 success: false,
                 error: "Server error."
-            }),
-            {
-                status: 500,
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
+            },
+            500
         );
 
     }
+
+}
+
+
+// =========================================
+// JSON RESPONSE HELPER
+// =========================================
+
+function jsonResponse(
+    body,
+    status = 200
+) {
+
+    return new Response(
+        JSON.stringify(body),
+        {
+            status: status,
+
+            headers: {
+                "Content-Type":
+                    "application/json"
+            }
+        }
+    );
 
 }
