@@ -1740,3 +1740,48 @@ body {
     }
 
 }
+
+/* ========================================
+   CREATE PROJECT
+======================================== */
+
+.project-create-button {
+    margin-top: 14px;
+
+    padding: 13px 20px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    color: #ffffff;
+
+    font: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.project-create-button:hover {
+    background:
+        rgba(255, 255, 255, 0.12);
+
+    transform:
+        translateY(-1px);
+}
+
+.project-create-button:disabled {
+    opacity: 0.5;
+
+    cursor: wait;
+
+    transform: none;
+}

@@ -41,6 +41,11 @@ const copyQuoteLinkButton =
         "copyQuoteLinkButton"
     );    
 
+    const createProjectButton =
+    document.getElementById(
+        "createProjectButton"
+    );
+
 
 // =========================================
 // REFERENCE
@@ -683,6 +688,96 @@ copyQuoteLinkButton.addEventListener(
         } catch {
 
             clientQuoteLink.select();
+
+        }
+
+    }
+);
+
+
+// =========================================
+// CREATE PROJECT
+// =========================================
+
+createProjectButton.addEventListener(
+    "click",
+    async () => {
+
+        createProjectButton.disabled =
+            true;
+
+        createProjectButton.textContent =
+            "Creating Project...";
+
+        quoteEditMessage.textContent =
+            "";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/admin/create-project",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                quoteReference:
+                                    quoteReference
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error ||
+                    "Unable to create project."
+                );
+
+            }
+
+
+            quoteEditMessage.textContent =
+                `Project created — ${data.projectReference}`;
+
+
+            createProjectButton.textContent =
+                "Project Created";
+
+
+        } catch (error) {
+
+            console.error(
+                "Create project error:",
+                error
+            );
+
+
+            quoteEditMessage.textContent =
+                error.message ||
+                "Unable to create project.";
+
+
+            createProjectButton.disabled =
+                false;
+
+            createProjectButton.textContent =
+                "Create Project";
 
         }
 
