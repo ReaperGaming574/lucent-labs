@@ -24,7 +24,7 @@ export async function onRequestGet(context) {
 
 
         // =========================================
-        // GET ENQUIRIES
+        // GET PROJECT REQUESTS
         // =========================================
 
         const enquiriesResult =
@@ -47,45 +47,82 @@ export async function onRequestGet(context) {
                     ORDER BY
                         created_at DESC
 
-                    LIMIT 50
+                    LIMIT 100
                     `
                 )
                 .all();
 
 
+        const enquiries =
+            enquiriesResult.results ||
+            [];
+
+
         // =========================================
-        // GET COUNTS
+        // COUNTS
         // =========================================
 
-        const enquiryCountResult =
-            await database
-                .prepare(
-                    `
-                    SELECT COUNT(*) AS count
+        const counts = {
 
-                    FROM enquiries
+            new: 0,
 
-                    WHERE status = 'new'
-                    `
+            contacted: 0,
+
+            in_progress: 0,
+
+            closed: 0
+
+        };
+
+
+        for (
+            const enquiry
+            of enquiries
+        ) {
+
+            const status =
+                normaliseStatus(
+                    enquiry.status
+                );
+
+
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    counts,
+                    status
                 )
-                .first();
+            ) {
+
+                counts[
+                    status
+                ]++;
+
+            }
+
+        }
 
 
-        const quoteCountResult =
-            await database
-                .prepare(
-                    `
-                    SELECT COUNT(*) AS count
+        // =========================================
+        // NORMALISE ENQUIRIES
+        // =========================================
 
-                    FROM quotes
+        const normalisedEnquiries =
+            enquiries.map(
+                enquiry => {
 
-                    WHERE status IN (
-                        'draft',
-                        'sent'
-                    )
-                    `
-                )
-                .first();
+                    return {
+
+                        ...enquiry,
+
+                        status:
+                            normaliseStatus(
+                                enquiry.status
+                            )
+
+                    };
+
+                }
+            );
 
 
         // =========================================
@@ -96,34 +133,11 @@ export async function onRequestGet(context) {
             {
                 success: true,
 
-                counts: {
-
-                    enquiries:
-                        Number(
-                            enquiryCountResult?.count ||
-                            0
-                        ),
-
-                    quotes:
-                        Number(
-                            quoteCountResult?.count ||
-                            0
-                        ),
-
-                    /*
-                        We haven't created the
-                        projects table yet.
-
-                        This will become a real
-                        database count later.
-                    */
-
-                    projects: 0
-
-                },
+                counts:
+                    counts,
 
                 enquiries:
-                    enquiriesResult.results || []
+                    normalisedEnquiries
             },
             200
         );
@@ -140,11 +154,71 @@ export async function onRequestGet(context) {
         return jsonResponse(
             {
                 success: false,
+
                 error:
-                    "Unable to load enquiries."
+                    "Unable to load project requests."
             },
             500
         );
+
+    }
+
+}
+
+
+// =========================================
+// NORMALISE STATUS
+// =========================================
+
+function normaliseStatus(
+    value
+) {
+
+    const status =
+        String(
+            value ||
+            ""
+        )
+            .trim()
+            .toLowerCase()
+            .replace(
+                /[\s-]+/g,
+                "_"
+            );
+
+
+    switch (status) {
+
+        case "contacted":
+            return "contacted";
+
+
+        case "in_progress":
+
+        case "active":
+
+        case "accepted":
+            return "in_progress";
+
+
+        case "closed":
+
+        case "completed":
+
+        case "declined":
+
+        case "cancelled":
+            return "closed";
+
+
+        case "new":
+
+        case "pending":
+
+        case "received":
+
+        default:
+            return "new";
 
     }
 
@@ -161,16 +235,22 @@ function jsonResponse(
 ) {
 
     return new Response(
-        JSON.stringify(body),
+        JSON.stringify(
+            body
+        ),
         {
-            status: status,
+            status:
+
+                status,
 
             headers: {
+
                 "Content-Type":
                     "application/json",
 
                 "Cache-Control":
                     "no-store"
+
             }
         }
     );

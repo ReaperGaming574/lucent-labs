@@ -1,6 +1,11 @@
 // =========================================
 // LUCENT LABS
-// ADMIN ENQUIRY VIEWER
+// STAFF PROJECT REQUEST VIEWER
+// =========================================
+
+
+// =========================================
+// ELEMENTS
 // =========================================
 
 const enquiryLoading =
@@ -18,19 +23,24 @@ const enquiryContent =
         "enquiryContent"
     );
 
-const quoteForm =
+const requestStatus =
     document.getElementById(
-        "quoteForm"
+        "requestStatus"
     );
 
-const quoteMessage =
+const staffNotes =
     document.getElementById(
-        "quoteMessage"
+        "staffNotes"
     );
 
-const saveQuoteButton =
+const requestMessage =
     document.getElementById(
-        "saveQuoteButton"
+        "requestMessage"
+    );
+
+const saveRequestButton =
+    document.getElementById(
+        "saveRequestButton"
     );
 
 
@@ -44,11 +54,21 @@ const params =
     );
 
 const reference =
-    params.get("ref");
+    params.get(
+        "ref"
+    );
 
 
 // =========================================
-// LOAD ENQUIRY
+// STATE
+// =========================================
+
+let currentEnquiry =
+    null;
+
+
+// =========================================
+// LOAD PROJECT REQUEST
 // =========================================
 
 async function loadEnquiry() {
@@ -69,12 +89,16 @@ async function loadEnquiry() {
                     reference
                 )}`,
                 {
-                    method: "GET",
+                    method:
+                        "GET",
+
                     headers: {
                         "Accept":
                             "application/json"
                     },
-                    cache: "no-store"
+
+                    cache:
+                        "no-store"
                 }
             );
 
@@ -99,23 +123,28 @@ async function loadEnquiry() {
 
             throw new Error(
                 data.error ||
-                "Enquiry not found."
+                "Project request not found."
             );
 
         }
 
 
+        currentEnquiry =
+            data.enquiry;
+
+
         renderEnquiry(
-            data.enquiry
+            currentEnquiry
         );
 
 
     } catch (error) {
 
         console.error(
-            "Enquiry error:",
+            "Project request error:",
             error
         );
+
 
         showError();
 
@@ -125,41 +154,67 @@ async function loadEnquiry() {
 
 
 // =========================================
-// RENDER ENQUIRY
+// RENDER PROJECT REQUEST
 // =========================================
 
-function renderEnquiry(enquiry) {
+function renderEnquiry(
+    enquiry
+) {
+
+    const status =
+        normaliseStatus(
+            enquiry.status
+        );
+
 
     setText(
         "enquiryReference",
         enquiry.reference
     );
 
+
+    setText(
+        "requestReference",
+        enquiry.reference
+    );
+
+
     setText(
         "enquiryProjectName",
-        enquiry.project_name
+        enquiry.project_name ||
+        "Untitled Project"
     );
+
 
     setText(
         "enquiryProjectType",
-        enquiry.project_type
+        formatProjectType(
+            enquiry.project_type
+        )
     );
+
 
     setText(
         "enquiryStatus",
-        enquiry.status
+        getStatusLabel(
+            status
+        )
     );
 
 
     setText(
         "clientName",
-        enquiry.client_name
+        enquiry.client_name ||
+        "Not provided"
     );
+
 
     setText(
         "clientEmail",
-        enquiry.email
+        enquiry.email ||
+        "Not provided"
     );
+
 
     setText(
         "clientDiscord",
@@ -170,18 +225,24 @@ function renderEnquiry(enquiry) {
 
     setText(
         "projectBudget",
-        enquiry.budget
+        enquiry.budget ||
+        "Not provided"
     );
+
 
     setText(
         "projectDeadline",
-        enquiry.deadline
+        enquiry.deadline ||
+        "Not provided"
     );
+
 
     setText(
         "projectDescription",
-        enquiry.project_description
+        enquiry.project_description ||
+        "Not provided"
     );
+
 
     setText(
         "projectFeatures",
@@ -189,11 +250,37 @@ function renderEnquiry(enquiry) {
         "Not provided"
     );
 
+
     setText(
         "projectReferences",
         enquiry.project_references ||
         "Not provided"
     );
+
+
+    setText(
+        "requestCreatedAt",
+        formatDate(
+            enquiry.created_at
+        )
+    );
+
+
+    if (requestStatus) {
+
+        requestStatus.value =
+            status;
+
+    }
+
+
+    if (staffNotes) {
+
+        staffNotes.value =
+            enquiry.staff_notes ||
+            "";
+
+    }
 
 
     enquiryLoading.hidden =
@@ -209,197 +296,382 @@ function renderEnquiry(enquiry) {
 
 
 // =========================================
-// SAVE QUOTE
+// SAVE REQUEST
 // =========================================
 
-quoteForm.addEventListener(
-    "submit",
-    async event => {
+if (saveRequestButton) {
 
-        event.preventDefault();
+    saveRequestButton.addEventListener(
+        "click",
+        saveRequestChanges
+    );
 
-
-        const price =
-            document.getElementById(
-                "quotePrice"
-            ).value;
-
-        const deposit =
-            document.getElementById(
-                "quoteDeposit"
-            ).value;
-
-        const timescale =
-            document.getElementById(
-                "quoteTimescale"
-            ).value.trim();
-
-        const scope =
-            document.getElementById(
-                "quoteScope"
-            ).value.trim();
+}
 
 
-        quoteMessage.textContent =
-            "";
+async function saveRequestChanges() {
 
+    if (
+        !reference ||
+        !requestStatus
+    ) {
 
-        if (
-            !price ||
-            !timescale ||
-            !scope
-        ) {
-
-            quoteMessage.textContent =
-                "Please complete all required quote fields.";
-
-            return;
-
-        }
-
-
-        const priceNumber =
-            Number(price);
-
-        const depositNumber =
-            deposit
-                ? Number(deposit)
-                : 0;
-
-
-        if (
-            !Number.isFinite(priceNumber) ||
-            priceNumber <= 0
-        ) {
-
-            quoteMessage.textContent =
-                "Enter a valid project price.";
-
-            return;
-
-        }
-
-
-        if (
-            !Number.isFinite(depositNumber) ||
-            depositNumber < 0
-        ) {
-
-            quoteMessage.textContent =
-                "Enter a valid deposit.";
-
-            return;
-
-        }
-
-
-        if (
-            depositNumber >
-            priceNumber
-        ) {
-
-            quoteMessage.textContent =
-                "The deposit cannot be greater than the project price.";
-
-            return;
-
-        }
-
-
-        saveQuoteButton.disabled =
-            true;
-
-        saveQuoteButton.textContent =
-            "Saving...";
-
-
-        try {
-
-            const response =
-                await fetch(
-                    "/api/admin/create-quote",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                enquiryReference:
-                                    reference,
-
-                                price:
-                                    priceNumber,
-
-                                deposit:
-                                    depositNumber,
-
-                                timescale:
-                                    timescale,
-
-                                scope:
-                                    scope
-                            })
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (
-                !response.ok ||
-                !data.success
-            ) {
-
-                throw new Error(
-                    data.error ||
-                    "Unable to save quote."
-                );
-
-            }
-
-
-            quoteMessage.textContent =
-                `Draft saved — ${data.quoteReference}`;
-
-            saveQuoteButton.textContent =
-                "Draft Saved";
-
-
-            setText(
-                "enquiryStatus",
-                "quoted"
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "Quote error:",
-                error
-            );
-
-
-            quoteMessage.textContent =
-                error.message ||
-                "Unable to save quote.";
-
-
-            saveQuoteButton.disabled =
-                false;
-
-            saveQuoteButton.textContent =
-                "Save Draft";
-
-        }
+        return;
 
     }
-);
+
+
+    const status =
+        requestStatus.value;
+
+
+    const notes =
+        staffNotes
+            ? staffNotes.value.trim()
+            : "";
+
+
+    clearMessage();
+
+
+    saveRequestButton.disabled =
+        true;
+
+    saveRequestButton.textContent =
+        "Saving...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/enquiry",
+                {
+                    method:
+                        "PATCH",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            reference:
+                                reference,
+
+                            status:
+                                status,
+
+                            staffNotes:
+                                notes
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to save request."
+            );
+
+        }
+
+
+        if (data.enquiry) {
+
+            currentEnquiry =
+                data.enquiry;
+
+        } else {
+
+            currentEnquiry = {
+                ...currentEnquiry,
+
+                status:
+                    status,
+
+                staff_notes:
+                    notes
+            };
+
+        }
+
+
+        setText(
+            "enquiryStatus",
+            getStatusLabel(
+                normaliseStatus(
+                    status
+                )
+            )
+        );
+
+
+        showMessage(
+            "Changes saved."
+        );
+
+
+        saveRequestButton.textContent =
+            "Saved ✓";
+
+
+        setTimeout(
+            () => {
+
+                saveRequestButton.disabled =
+                    false;
+
+                saveRequestButton.textContent =
+                    "Save Changes";
+
+            },
+            1200
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Save project request error:",
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "Unable to save changes."
+        );
+
+
+        saveRequestButton.disabled =
+            false;
+
+        saveRequestButton.textContent =
+            "Save Changes";
+
+    }
+
+}
+
+
+// =========================================
+// STATUS
+// =========================================
+
+function normaliseStatus(
+    value
+) {
+
+    const status =
+        String(
+            value ||
+            ""
+        )
+            .trim()
+            .toLowerCase()
+            .replace(
+                /[\s-]+/g,
+                "_"
+            );
+
+
+    switch (status) {
+
+        case "contacted":
+            return "contacted";
+
+
+        case "in_progress":
+
+        case "active":
+
+        case "accepted":
+            return "in_progress";
+
+
+        case "closed":
+
+        case "completed":
+
+        case "declined":
+
+        case "cancelled":
+            return "closed";
+
+
+        case "new":
+
+        case "pending":
+
+        case "received":
+
+        default:
+            return "new";
+
+    }
+
+}
+
+
+function getStatusLabel(
+    status
+) {
+
+    switch (status) {
+
+        case "contacted":
+            return "Contacted";
+
+        case "in_progress":
+            return "In Progress";
+
+        case "closed":
+            return "Closed";
+
+        default:
+            return "New";
+
+    }
+
+}
+
+
+// =========================================
+// PROJECT TYPE
+// =========================================
+
+function formatProjectType(
+    value
+) {
+
+    if (!value) {
+
+        return "Project";
+
+    }
+
+
+    return String(
+        value
+    )
+        .replace(
+            /[_-]+/g,
+            " "
+        )
+        .replace(
+            /\b\w/g,
+            character =>
+                character.toUpperCase()
+        );
+
+}
+
+
+// =========================================
+// DATE
+// =========================================
+
+function formatDate(
+    value
+) {
+
+    if (!value) {
+
+        return "Unknown";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleString(
+        "en-GB",
+        {
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            year:
+                "numeric",
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit"
+        }
+    );
+
+}
+
+
+// =========================================
+// MESSAGE
+// =========================================
+
+function showMessage(
+    message
+) {
+
+    if (!requestMessage) {
+
+        return;
+
+    }
+
+
+    requestMessage.textContent =
+        message;
+
+}
+
+
+function clearMessage() {
+
+    if (!requestMessage) {
+
+        return;
+
+    }
+
+
+    requestMessage.textContent =
+        "";
+
+}
 
 
 // =========================================
@@ -418,13 +690,16 @@ function setText(
 
 
     if (!element) {
+
         return;
+
     }
 
 
     element.textContent =
         String(
-            value ?? "—"
+            value ??
+            "—"
         );
 
 }

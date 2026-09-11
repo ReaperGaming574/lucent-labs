@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Lucent Admin</title>
+    <title>Lucent Staff</title>
 
     <link
         rel="stylesheet"
@@ -36,7 +36,7 @@
                 </a>
 
                 <span>
-                    ADMIN
+                    STAFF
                 </span>
 
             </div>
@@ -49,31 +49,7 @@
                     class="admin-nav-link active"
                 >
                     <span>01</span>
-                    Dashboard
-                </a>
-
-                <a
-                    href="enquiry.html"
-                    class="admin-nav-link"
-                >
-                    <span>02</span>
-                    Enquiries
-                </a>
-
-                <a
-                    href="/admin/quote.html"
-                    class="admin-nav-link"
-                >
-                    <span>03</span>
-                    Quotes
-                </a>
-
-                <a
-                    href="/admin/projects.html"
-                    class="admin-nav-link"
-                >
-                    <span>04</span>
-                    Projects
+                    Project Inbox
                 </a>
 
             </nav>
@@ -96,6 +72,10 @@
 
         <main class="admin-main">
 
+            <!-- ========================================
+                 HEADER
+            ========================================= -->
+
             <header class="admin-header">
 
                 <div>
@@ -105,7 +85,7 @@
                     </p>
 
                     <h1>
-                        Dashboard
+                        Project Inbox
                     </h1>
 
                 </div>
@@ -137,7 +117,7 @@
                         </p>
 
                         <h2>
-                            Project Overview
+                            Project Requests
                         </h2>
 
                     </div>
@@ -147,15 +127,19 @@
 
                 <div class="stat-grid">
 
+                    <!-- ========================================
+                         NEW REQUESTS
+                    ========================================= -->
+
                     <article class="stat-card">
 
                         <span class="stat-label">
-                            New Enquiries
+                            New Requests
                         </span>
 
                         <strong
                             class="stat-value"
-                            id="enquiryCount"
+                            id="newRequestCount"
                         >
                             —
                         </strong>
@@ -163,15 +147,19 @@
                     </article>
 
 
+                    <!-- ========================================
+                         CONTACTED
+                    ========================================= -->
+
                     <article class="stat-card">
 
                         <span class="stat-label">
-                            Active Quotes
+                            Contacted
                         </span>
 
                         <strong
                             class="stat-value"
-                            id="quoteCount"
+                            id="contactedCount"
                         >
                             —
                         </strong>
@@ -179,15 +167,39 @@
                     </article>
 
 
+                    <!-- ========================================
+                         IN PROGRESS
+                    ========================================= -->
+
                     <article class="stat-card">
 
                         <span class="stat-label">
-                            Active Projects
+                            In Progress
                         </span>
 
                         <strong
                             class="stat-value"
-                            id="projectCount"
+                            id="inProgressCount"
+                        >
+                            —
+                        </strong>
+
+                    </article>
+
+
+                    <!-- ========================================
+                         CLOSED
+                    ========================================= -->
+
+                    <article class="stat-card">
+
+                        <span class="stat-label">
+                            Closed
+                        </span>
+
+                        <strong
+                            class="stat-value"
+                            id="closedCount"
                         >
                             —
                         </strong>
@@ -200,7 +212,7 @@
 
 
             <!-- ========================================
-                 RECENT ENQUIRIES
+                 PROJECT INBOX
             ========================================= -->
 
             <section class="admin-section">
@@ -210,28 +222,74 @@
                     <div>
 
                         <p class="section-number">
-                            02 / ENQUIRIES
+                            02 / PROJECT INBOX
                         </p>
 
                         <h2>
-                            Recent Enquiries
+                            Recent Project Requests
                         </h2>
+
+                    </div>
+
+
+                    <div class="inbox-actions">
+
+                        <select
+                            id="statusFilter"
+                            class="admin-filter"
+                            aria-label="Filter project requests"
+                        >
+
+                            <option value="all">
+                                All Requests
+                            </option>
+
+                            <option value="new">
+                                New
+                            </option>
+
+                            <option value="contacted">
+                                Contacted
+                            </option>
+
+                            <option value="in_progress">
+                                In Progress
+                            </option>
+
+                            <option value="closed">
+                                Closed
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="button"
+                            class="admin-refresh-button"
+                            id="refreshInbox"
+                        >
+                            Refresh
+                        </button>
 
                     </div>
 
                 </div>
 
 
+                <!-- ========================================
+                     PROJECT REQUEST LIST
+                ========================================= -->
+
                 <div
                     class="enquiry-list"
-                    id="enquiryList"
+                    id="projectInbox"
                 >
 
                     <div class="admin-loading">
 
                         <span class="loading-dot"></span>
 
-                        Loading enquiries...
+                        Loading project requests...
 
                     </div>
 

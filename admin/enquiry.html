@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Enquiry | Lucent Admin</title>
+    <title>Project Request | Lucent Staff</title>
 
     <link
         rel="stylesheet"
@@ -36,7 +36,7 @@
                 </a>
 
                 <span>
-                    ADMIN
+                    STAFF
                 </span>
 
             </div>
@@ -49,31 +49,7 @@
                     class="admin-nav-link"
                 >
                     <span>01</span>
-                    Dashboard
-                </a>
-
-                <a
-                    href="/admin/enquiry.html"
-                    class="admin-nav-link active"
-                >
-                    <span>02</span>
-                    Enquiries
-                </a>
-
-                <a
-                    href="/admin/quote.html"
-                    class="admin-nav-link"
-                >
-                    <span>03</span>
-                    Quotes
-                </a>
-
-                <a
-                    href="/admin/projects.html"
-                    class="admin-nav-link"
-                >
-                    <span>04</span>
-                    Projects
+                    Project Inbox
                 </a>
 
             </nav>
@@ -100,7 +76,7 @@
                 href="/admin/"
                 class="admin-back"
             >
-                ← Back to Dashboard
+                ← Back to Project Inbox
             </a>
 
 
@@ -115,7 +91,7 @@
 
                 <span class="loading-dot"></span>
 
-                Loading enquiry...
+                Loading project request...
 
             </div>
 
@@ -131,24 +107,28 @@
             >
 
                 <p>
-                    Unable to load this enquiry.
+                    Unable to load this project request.
                 </p>
 
                 <a href="/admin/">
-                    Return to Dashboard
+                    Return to Project Inbox
                 </a>
 
             </div>
 
 
             <!-- ========================================
-                 ENQUIRY
+                 PROJECT REQUEST
             ========================================= -->
 
             <div
                 id="enquiryContent"
                 hidden
             >
+
+                <!-- ========================================
+                     HEADER
+                ========================================= -->
 
                 <header class="enquiry-header">
 
@@ -349,150 +329,177 @@
                 </section>
 
 
-               <!-- ========================================
-     QUOTE
-========================================= -->
+                <!-- ========================================
+                     REQUEST MANAGEMENT
+                ========================================= -->
 
-<section class="admin-section">
+                <section class="admin-section">
 
-    <div class="section-heading">
+                    <div class="section-heading">
 
-        <div>
+                        <div>
 
-            <p class="section-number">
-                03 / QUOTE
-            </p>
+                            <p class="section-number">
+                                03 / MANAGEMENT
+                            </p>
 
-            <h2>
-                Create Quote
-            </h2>
+                            <h2>
+                                Manage Request
+                            </h2>
 
-        </div>
+                        </div>
 
-    </div>
-
-
-    <form
-        class="quote-form"
-        id="quoteForm"
-    >
-
-        <div class="quote-form-grid">
-
-            <div class="quote-field">
-
-                <label for="quotePrice">
-                    Project Price
-                </label>
-
-                <div class="money-input">
-
-                    <span>£</span>
-
-                    <input
-                        type="number"
-                        id="quotePrice"
-                        min="0"
-                        step="0.01"
-                        placeholder="350.00"
-                        required
-                    >
-
-                </div>
-
-            </div>
+                    </div>
 
 
-            <div class="quote-field">
-
-                <label for="quoteDeposit">
-                    Deposit
-                </label>
-
-                <div class="money-input">
-
-                    <span>£</span>
-
-                    <input
-                        type="number"
-                        id="quoteDeposit"
-                        min="0"
-                        step="0.01"
-                        placeholder="175.00"
-                    >
-
-                </div>
-
-            </div>
-
-        </div>
+                    <div class="request-management-card">
 
 
-        <div class="quote-field">
+                        <!-- ========================================
+                             STATUS
+                        ========================================= -->
 
-            <label for="quoteTimescale">
-                Estimated Timescale
-            </label>
+                        <div class="quote-field">
 
-            <input
-                type="text"
-                id="quoteTimescale"
-                maxlength="100"
-                placeholder="e.g. 2–4 weeks"
-                required
-            >
+                            <label for="requestStatus">
+                                Project Status
+                            </label>
 
-        </div>
+                            <select
+                                id="requestStatus"
+                                class="admin-filter"
+                            >
 
+                                <option value="new">
+                                    New
+                                </option>
 
-        <div class="quote-field">
+                                <option value="contacted">
+                                    Contacted
+                                </option>
 
-            <label for="quoteScope">
-                Scope of Work
-            </label>
+                                <option value="in_progress">
+                                    In Progress
+                                </option>
 
-            <textarea
-                id="quoteScope"
-                rows="8"
-                maxlength="5000"
-                placeholder="Describe what Lucent Labs will deliver..."
-                required
-            ></textarea>
+                                <option value="closed">
+                                    Closed
+                                </option>
 
-        </div>
+                            </select>
 
-
-        <div
-            class="quote-form-message"
-            id="quoteMessage"
-            role="alert"
-        ></div>
+                        </div>
 
 
-        <div class="quote-actions">
+                        <!-- ========================================
+                             STAFF NOTES
+                        ========================================= -->
 
-            <button
-                type="submit"
-                class="quote-save-button"
-                id="saveQuoteButton"
-            >
-                Save Draft
-            </button>
+                        <div class="quote-field">
+
+                            <label for="staffNotes">
+                                Staff Notes
+                            </label>
+
+                            <textarea
+                                id="staffNotes"
+                                rows="8"
+                                maxlength="5000"
+                                placeholder="Add internal notes about this request..."
+                            ></textarea>
+
+                            <p class="staff-note-hint">
+                                These notes are for Lucent Labs staff only.
+                            </p>
+
+                        </div>
 
 
-            <button
-                type="button"
-                class="quote-send-button"
-                disabled
-            >
-                Send Quote
-            </button>
+                        <!-- ========================================
+                             SAVE MESSAGE
+                        ========================================= -->
 
-        </div>
+                        <div
+                            class="quote-form-message"
+                            id="requestMessage"
+                            role="alert"
+                        ></div>
 
-    </form>
 
-</section>
+                        <!-- ========================================
+                             ACTIONS
+                        ========================================= -->
+
+                        <div class="quote-actions">
+
+                            <button
+                                type="button"
+                                class="quote-save-button"
+                                id="saveRequestButton"
+                            >
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ========================================
+                     REQUEST INFORMATION
+                ========================================= -->
+
+                <section class="admin-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="section-number">
+                                04 / INFORMATION
+                            </p>
+
+                            <h2>
+                                Request Information
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-grid two-column">
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Reference
+                            </span>
+
+                            <strong id="requestReference">
+                                —
+                            </strong>
+
+                        </article>
+
+
+                        <article class="detail-card">
+
+                            <span class="detail-label">
+                                Received
+                            </span>
+
+                            <strong id="requestCreatedAt">
+                                —
+                            </strong>
+
+                        </article>
+
+                    </div>
+
+                </section>
 
             </div>
 

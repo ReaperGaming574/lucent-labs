@@ -1,48 +1,81 @@
 // =========================================
-// LUCENT LABS ADMIN
+// LUCENT LABS STAFF PROJECT INBOX
 // =========================================
-
-const enquiryCount =
-    document.getElementById(
-        "enquiryCount"
-    );
-
-const quoteCount =
-    document.getElementById(
-        "quoteCount"
-    );
-
-const projectCount =
-    document.getElementById(
-        "projectCount"
-    );
-
-const enquiryList =
-    document.getElementById(
-        "enquiryList"
-    );
 
 
 // =========================================
-// LOAD DASHBOARD
+// ELEMENTS
 // =========================================
 
-async function loadDashboard() {
+const newRequestCount =
+    document.getElementById(
+        "newRequestCount"
+    );
+
+const contactedCount =
+    document.getElementById(
+        "contactedCount"
+    );
+
+const inProgressCount =
+    document.getElementById(
+        "inProgressCount"
+    );
+
+const closedCount =
+    document.getElementById(
+        "closedCount"
+    );
+
+const projectInbox =
+    document.getElementById(
+        "projectInbox"
+    );
+
+const statusFilter =
+    document.getElementById(
+        "statusFilter"
+    );
+
+const refreshInbox =
+    document.getElementById(
+        "refreshInbox"
+    );
+
+
+// =========================================
+// STATE
+// =========================================
+
+let enquiries =
+    [];
+
+
+// =========================================
+// LOAD PROJECT INBOX
+// =========================================
+
+async function loadProjectInbox() {
 
     try {
+
+        showLoading();
+
 
         const response =
             await fetch(
                 "/api/admin/enquiries",
                 {
-                    method: "GET",
+                    method:
+                        "GET",
 
                     headers: {
                         "Accept":
                             "application/json"
                     },
 
-                    cache: "no-store"
+                    cache:
+                        "no-store"
                 }
             );
 
@@ -64,74 +97,39 @@ async function loadDashboard() {
 
             throw new Error(
                 data.error ||
-                "Unable to load dashboard."
+                "Unable to load project requests."
             );
 
         }
 
 
-        // =========================================
-        // UPDATE COUNTS
-        // =========================================
-
-        enquiryCount.textContent =
-            data.counts?.enquiries ?? 0;
-
-        quoteCount.textContent =
-            data.counts?.quotes ?? 0;
-
-       const projectResponse = await fetch(
-    "/api/admin/projects",
-    {
-        method: "GET",
-        headers: {
-            "Accept": "application/json"
-        },
-        cache: "no-store"
-    }
-);
-
-if (!projectResponse.ok) {
-    throw new Error(
-        `Project request failed: ${projectResponse.status}`
-    );
-}
-
-const projectData = await projectResponse.json();
-
-const projects = projectData.projects || [];
-
-projectCount.textContent =
-    projects.filter(project =>
-        project.status !== "completed"
-    ).length;
+        enquiries =
+            Array.isArray(
+                data.enquiries
+            )
+                ? data.enquiries
+                : [];
 
 
-        // =========================================
-        // RENDER ENQUIRIES
-        // =========================================
+        updateCounts();
 
-        renderEnquiries(
-            data.enquiries || []
-        );
 
+        renderProjectInbox();
 
     } catch (error) {
 
         console.error(
-            "Dashboard error:",
+            "Project inbox error:",
             error
         );
 
 
-        enquiryCount.textContent = "—";
-        quoteCount.textContent = "—";
-        projectCount.textContent = "—";
+        setCountsUnavailable();
 
 
-        enquiryList.innerHTML = `
+        projectInbox.innerHTML = `
             <div class="admin-empty">
-                Unable to load enquiries.
+                Unable to load project requests.
             </div>
         `;
 
@@ -141,16 +139,104 @@ projectCount.textContent =
 
 
 // =========================================
-// RENDER ENQUIRIES
+// UPDATE COUNTS
 // =========================================
 
-function renderEnquiries(enquiries) {
+function updateCounts() {
 
-    if (!enquiries.length) {
+    const counts = {
 
-        enquiryList.innerHTML = `
+        new:
+            0,
+
+        contacted:
+            0,
+
+        in_progress:
+            0,
+
+        closed:
+            0
+
+    };
+
+
+    for (
+        const enquiry
+        of enquiries
+    ) {
+
+        const status =
+            normaliseStatus(
+                enquiry.status
+            );
+
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                counts,
+                status
+            )
+        ) {
+
+            counts[
+                status
+            ]++;
+
+        }
+
+    }
+
+
+    newRequestCount.textContent =
+        counts.new;
+
+
+    contactedCount.textContent =
+        counts.contacted;
+
+
+    inProgressCount.textContent =
+        counts.in_progress;
+
+
+    closedCount.textContent =
+        counts.closed;
+
+}
+
+
+// =========================================
+// RENDER PROJECT INBOX
+// =========================================
+
+function renderProjectInbox() {
+
+    const selectedStatus =
+        statusFilter?.value ||
+        "all";
+
+
+    const filtered =
+        selectedStatus ===
+            "all"
+
+            ? enquiries
+
+            : enquiries.filter(
+                enquiry =>
+                    normaliseStatus(
+                        enquiry.status
+                    ) ===
+                    selectedStatus
+            );
+
+
+    if (!filtered.length) {
+
+        projectInbox.innerHTML = `
             <div class="admin-empty">
-                No enquiries yet.
+                No project requests found.
             </div>
         `;
 
@@ -159,77 +245,372 @@ function renderEnquiries(enquiries) {
     }
 
 
-    enquiryList.innerHTML =
-        enquiries
-            .map(
-                enquiry => {
+    const sorted =
+        [...filtered]
+            .sort(
+                (a, b) => {
 
-                    const reference =
-                        escapeHTML(
-                            enquiry.reference
-                        );
-
-                    const projectName =
-                        escapeHTML(
-                            enquiry.project_name
-                        );
-
-                    const projectType =
-                        escapeHTML(
-                            enquiry.project_type
-                        );
-
-                    const deadline =
-                        escapeHTML(
-                            enquiry.deadline
-                        );
-
-                    const status =
-                        escapeHTML(
-                            enquiry.status
-                        );
+                    const dateA =
+                        new Date(
+                            a.created_at ||
+                            0
+                        ).getTime();
 
 
-                    return `
-                        <article class="enquiry-item">
+                    const dateB =
+                        new Date(
+                            b.created_at ||
+                            0
+                        ).getTime();
 
-                            <div class="enquiry-reference">
-                                ${reference}
-                            </div>
 
-                            <div class="enquiry-project">
-
-                                <h3>
-                                    ${projectName}
-                                </h3>
-
-                                <p>
-                                    ${projectType}
-                                    •
-                                    ${deadline}
-                                </p>
-
-                            </div>
-
-                            <div class="enquiry-status">
-                                ${status}
-                            </div>
-
-                            <a
-                                class="enquiry-view"
-                                href="enquiry.html?ref=${encodeURIComponent(
-                                    enquiry.reference
-                                )}"
-                            >
-                                View →
-                            </a>
-
-                        </article>
-                    `;
+                    return (
+                        dateB -
+                        dateA
+                    );
 
                 }
+            );
+
+
+    projectInbox.innerHTML =
+        sorted
+            .map(
+                enquiry =>
+                    createProjectRequestHTML(
+                        enquiry
+                    )
             )
             .join("");
+
+}
+
+
+// =========================================
+// CREATE PROJECT REQUEST
+// =========================================
+
+function createProjectRequestHTML(
+    enquiry
+) {
+
+    const reference =
+        escapeHTML(
+            enquiry.reference ||
+            "No reference"
+        );
+
+
+    const projectName =
+        escapeHTML(
+            enquiry.project_name ||
+            "Untitled Project"
+        );
+
+
+    const projectType =
+        escapeHTML(
+            formatProjectType(
+                enquiry.project_type
+            )
+        );
+
+
+    const budget =
+        escapeHTML(
+            enquiry.budget ||
+            enquiry.budget_range ||
+            "Budget not provided"
+        );
+
+
+    const name =
+        escapeHTML(
+            enquiry.name ||
+            enquiry.client_name ||
+            "Unknown Client"
+        );
+
+
+    const status =
+        normaliseStatus(
+            enquiry.status
+        );
+
+
+    const statusLabel =
+        escapeHTML(
+            getStatusLabel(
+                status
+            )
+        );
+
+
+    const received =
+        escapeHTML(
+            formatDate(
+                enquiry.created_at
+            )
+        );
+
+
+    const deadline =
+        enquiry.deadline
+            ? escapeHTML(
+                enquiry.deadline
+            )
+            : null;
+
+
+    return `
+        <article class="enquiry-item">
+
+            <div class="enquiry-reference">
+                ${reference}
+            </div>
+
+            <div class="enquiry-project">
+
+                <h3>
+                    ${projectName}
+                </h3>
+
+                <p>
+                    ${projectType}
+                    •
+                    ${budget}
+                </p>
+
+                <p>
+                    ${name}
+                    •
+                    Received ${received}
+                    ${
+                        deadline
+                            ? `• Deadline ${deadline}`
+                            : ""
+                    }
+                </p>
+
+            </div>
+
+            <div
+                class="enquiry-status"
+                data-status="${escapeHTML(
+                    status
+                )}"
+            >
+                ${statusLabel}
+            </div>
+
+            <a
+                class="enquiry-view"
+                href="enquiry.html?ref=${encodeURIComponent(
+                    enquiry.reference ||
+                    ""
+                )}"
+            >
+                Open →
+            </a>
+
+        </article>
+    `;
+
+}
+
+
+// =========================================
+// STATUS
+// =========================================
+
+function normaliseStatus(
+    value
+) {
+
+    const status =
+        String(
+            value ||
+            ""
+        )
+            .trim()
+            .toLowerCase()
+            .replace(
+                /[\s-]+/g,
+                "_"
+            );
+
+
+    switch (status) {
+
+        case "contacted":
+            return "contacted";
+
+        case "in_progress":
+        case "active":
+        case "accepted":
+            return "in_progress";
+
+        case "closed":
+        case "completed":
+        case "declined":
+        case "cancelled":
+            return "closed";
+
+        case "new":
+        case "pending":
+        case "received":
+        default:
+            return "new";
+
+    }
+
+}
+
+
+function getStatusLabel(
+    status
+) {
+
+    switch (status) {
+
+        case "contacted":
+            return "Contacted";
+
+        case "in_progress":
+            return "In Progress";
+
+        case "closed":
+            return "Closed";
+
+        default:
+            return "New";
+
+    }
+
+}
+
+
+// =========================================
+// PROJECT TYPE
+// =========================================
+
+function formatProjectType(
+    value
+) {
+
+    if (!value) {
+
+        return "Project";
+
+    }
+
+
+    return String(
+        value
+    )
+        .replace(
+            /[_-]+/g,
+            " "
+        )
+        .replace(
+            /\b\w/g,
+            character =>
+                character.toUpperCase()
+        );
+
+}
+
+
+// =========================================
+// DATE
+// =========================================
+
+function formatDate(
+    value
+) {
+
+    if (!value) {
+
+        return "Unknown date";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            year:
+                "numeric"
+        }
+    );
+
+}
+
+
+// =========================================
+// LOADING
+// =========================================
+
+function showLoading() {
+
+    projectInbox.innerHTML = `
+        <div class="admin-loading">
+
+            <span class="loading-dot"></span>
+
+            Loading project requests...
+
+        </div>
+    `;
+
+}
+
+
+// =========================================
+// ERROR COUNTS
+// =========================================
+
+function setCountsUnavailable() {
+
+    newRequestCount.textContent =
+        "—";
+
+
+    contactedCount.textContent =
+        "—";
+
+
+    inProgressCount.textContent =
+        "—";
+
+
+    closedCount.textContent =
+        "—";
 
 }
 
@@ -238,7 +619,9 @@ function renderEnquiries(enquiries) {
 // ESCAPE HTML
 // =========================================
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
     const element =
         document.createElement(
@@ -248,7 +631,8 @@ function escapeHTML(value) {
 
     element.textContent =
         String(
-            value ?? ""
+            value ??
+            ""
         );
 
 
@@ -256,61 +640,31 @@ function escapeHTML(value) {
 
 }
 
+
 // =========================================
-// ACTIVE PROJECTS
+// FILTER
 // =========================================
 
-async function loadActiveProjects() {
+if (statusFilter) {
 
-    try {
+    statusFilter.addEventListener(
+        "change",
+        renderProjectInbox
+    );
 
-        const response =
-            await fetch(
-                "/api/admin/projects"
-            );
-
-
-        const data =
-            await response.json();
+}
 
 
-        if (
-            !response.ok ||
-            !data.success
-        ) {
+// =========================================
+// REFRESH
+// =========================================
 
-            throw new Error(
-                data.error ||
-                "Unable to load projects."
-            );
+if (refreshInbox) {
 
-        }
-
-
-        const projects =
-            data.projects || [];
-
-
-        const active =
-            projects.filter(
-                project =>
-                    project.status !==
-                    "completed"
-            );
-
-
-        projectCount.textContent =
-            active.length;
-
-
-    } catch (error) {
-
-        console.error(
-            "Active projects error:",
-            error
-        );
-
-    }
+    refreshInbox.addEventListener(
+        "click",
+        loadProjectInbox
+    );
 
 }
 
@@ -319,4 +673,4 @@ async function loadActiveProjects() {
 // START
 // =========================================
 
-loadDashboard();
+loadProjectInbox();
